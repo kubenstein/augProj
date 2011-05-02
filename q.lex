@@ -46,7 +46,7 @@ NAPIS {STRING1}|{STRING2}
 			}
 "while"			{
 			 BEGIN( def );
-			 printf("<while>" );
+			 printf("<defWhile>" );
 			}
 <def>","		{}
 <def>"\n"		{
