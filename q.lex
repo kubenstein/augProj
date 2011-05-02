@@ -72,6 +72,7 @@ NAPIS {STRING1}|{STRING2}
 
  /* smietnik */
 {WCIECIE}		{}
+";"			{}
 .			{ error("ERR_LEX"); }
 
 %% 
