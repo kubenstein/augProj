@@ -8,7 +8,8 @@ void error( char* komunikat ) {
 
 WCIECIE [ \t]*
 CYFRA [0-9]
-LICZBA {WCIECIE}{CYFRA}+{WCIECIE}
+DEC_LICZBA {WCIECIE}{CYFRA}+{WCIECIE}
+LICZBA "&"
 STRING1 \"[^\"]*\"
 STRING2 \'[^\']*\'
 NAPIS {STRING1}|{STRING2}
@@ -26,11 +27,11 @@ NAPIS {STRING1}|{STRING2}
 
  /* wartosci */ 
 {NAPIS}			{ printf("<NAPIS:%s />", yytext ); }
-"&"			{ printf("<LICZBA:%s />", yytext ); }
+{LICZBA}		{ printf("<LICZBA:%s />", yytext ); }
 
 
  /* identyfikatory */
-"[c:("{LICZBA}","{LICZBA}","{LICZBA}")]"	{
+"[c:("{DEC_LICZBA}","{DEC_LICZBA}","{DEC_LICZBA}")]"	{
 			 int r,g,b;
 			 sscanf( yytext, "[c:(%d,%d,%d)]",&r,&g,&b );
 			 printf("<COLOR:(%d,%d,%d)>", r,g,b ); 
