@@ -1,7 +1,7 @@
 %option yylineno
 %{
-void error() {
-	fprintf(stdout, "LEX_ERR: %d\n", yylineno );
+void error( char* komunikat ) {
+	fprintf(stdout, "%s: %d\n",komunikat, yylineno );
 }
 %}
 
@@ -77,7 +77,7 @@ NAPIS {STRING1}|{STRING2}
 
  /* smietnik */
 {WCIECIE}		{}
-.			{ error(); }
+.			{ error("ERR_LEX"); }
 
 %% 
   
