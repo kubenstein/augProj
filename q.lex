@@ -18,7 +18,7 @@ NAPIS {STRING1}|{STRING2}
 
  /* komentarze */
 {WCIECIE}"/*".*"*/" 	{}
-{WCIECIE}"//".*"\n"	{}
+{WCIECIE}"//"[^"\n"]*	{}
 
  /* zmienne */
 "%"			{ printf("<ZMIENNA_STRINGOWA />" ); }
