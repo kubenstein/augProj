@@ -56,7 +56,9 @@ NAPIS {STRING1}|{STRING2}
 
  /* wywolanie funkcji */
 "@"			{ printf("<funccall />"); }
-
+({NAPIS}|{LICZBA})(","({NAPIS}|{LICZBA}))+ {
+			 printf("<funccall:%s />", yytext);
+			}
 
  /* operatory */
 "="			{ printf("="); }
