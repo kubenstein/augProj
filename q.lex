@@ -3,6 +3,21 @@
 void error( char* komunikat ) {
 	fprintf(stdout, "%s: %d\n",komunikat, yylineno );
 }
+
+
+// def tokenow, pozniej przeniose do bisona
+enum leksem {
+	L_STRING_VAR,
+	L_INT_VAR,
+	L_STRING,
+	L_INT,
+	L_COLOR_START,
+	L_COLOR_END,
+	L_FUNC_START,
+	L_WHILE_START,
+	L_DEF_END,
+	L_FUNC_CALL
+  };
 %}
 
 
@@ -22,12 +37,12 @@ NAPIS {STRING1}|{STRING2}
 {WCIECIE}"//"[^"\n"]*	{}
 
  /* zmienne */
-"%"			{ printf("<ZMIENNA_STRINGOWA />" ); }
-"#"			{ printf("<ZMIENNA_LICZBOWA />" ); }
+"%"			{ printf("<ZMIENNA_STRINGOWA />" );	return L_STRING_VAR; }
+"#"			{ printf("<ZMIENNA_LICZBOWA />" );	return L_INT_VAR; }
 
  /* wartosci */ 
-{NAPIS}			{ printf("<NAPIS:%s />", yytext ); }
-{LICZBA}		{ printf("<LICZBA:%s />", yytext ); }
+{NAPIS}			{ printf("<NAPIS:%s />", yytext );	return L_STRING; }
+{LICZBA}		{ printf("<LICZBA:%s />", yytext );	return L_INT; }
 
 
  /* identyfikatory */
@@ -35,40 +50,44 @@ NAPIS {STRING1}|{STRING2}
 			 int r,g,b;
 			 sscanf( yytext, "[c:(%d,%d,%d)]",&r,&g,&b );
 			 printf("<COLOR:(%d,%d,%d)>", r,g,b ); 
+								return L_COLOR_START;
 			}
-"[/c]"			{ printf("</ COLOR>"); }
+"[/c]"			{ printf("</ COLOR>");			return L_COLOR_END; }
 
 
  /* deklaracje */
 "def"			{
 			 BEGIN( def );
 			 printf("<defFunc>" );
+								return L_FUNC_START;
 			}
 "while"			{
 			 BEGIN( def );
 			 printf("<defWhile>" );
+								return L_WHILE_START;
 			}
 <def>","		{}
 <def>"\n"		{
 			 BEGIN( INITIAL );
 			 printf("</ def>" );
+								return L_DEF_END;
 			}
 
  /* wywolanie funkcji */
-"@"			{ printf("<funccall />"); }
+"@"			{ printf("<funccall />");		return L_FUNC_CALL; }
 ({NAPIS}|{LICZBA})(","({NAPIS}|{LICZBA}))+ {
 			 printf("<funccall:%s />", yytext);
+								return L_FUNC_CALL;
 			}
 
  /* operatory */
-"="			{ printf("="); }
-"=="			{ printf("=="); }
-"<"			{ printf("<"); }
-">"			{ printf(">"); }
-"+"			{ printf("+"); }
-"-"			{ printf("-"); }
-"*"			{ printf("*"); }
-"/"			{ printf("/"); }
+"="			{ printf("=");				return '='; }
+"<"			{ printf("<");				return '<'; }
+">"			{ printf(">");				return '>'; }
+"+"			{ printf("+");				return '+'; }
+"-"			{ printf("-");				return '-'; }
+"*"			{ printf("*");				return '*'; }
+"/"			{ printf("/");				return '/'; }
 
  /* smietnik */
 {WCIECIE}		{}
@@ -78,7 +97,7 @@ NAPIS {STRING1}|{STRING2}
 %% 
   
 int main() {
-	yylex();
+		while(1) yylex();
 	return 0;
 }
 
