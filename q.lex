@@ -14,7 +14,7 @@ STRING1 \"[^\"]*\"
 STRING2 \'[^\']*\'
 NAPIS {STRING1}|{STRING2}
 
-%s deffunc defwhile
+%s def
 %%
 
  /* komentarze */
@@ -39,32 +39,24 @@ NAPIS {STRING1}|{STRING2}
 "[/c]"			{ printf("</ COLOR>"); }
 
 
- /* deklaracja funkcji */
+ /* deklaracje */
 "def"			{
-			 BEGIN( deffunc );
-			 printf("<funcdef>" );
+			 BEGIN( def );
+			 printf("<defFunc>" );
 			}
-<deffunc>","		{}
-<deffunc>"\n"		{ 
+"while"			{
+			 BEGIN( def );
+			 printf("<while>" );
+			}
+<def>","		{}
+<def>"\n"		{
 			 BEGIN( INITIAL );
-			 printf("</ funcdef>" );
+			 printf("</ def>" );
 			}
-
 
  /* wywolanie funkcji */
 "@"			{ printf("<funccall />"); }
 
-
- /* deklaracja while */
-"while"			{
-			 BEGIN( defwhile );
-			 printf("<while>" );
-			}
-<defwhile>","		{}
-<defwhile>"\n"		{ 
-			 BEGIN( INITIAL );
-			 printf("</ while>" );
-			}
 
  /* operatory */
 "="			{ printf("="); }
