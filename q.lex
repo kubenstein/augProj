@@ -23,7 +23,8 @@ enum leksem {
 
 WCIECIE [ \t]*
 CYFRA [0-9]
-DEC_LICZBA {WCIECIE}{CYFRA}+{WCIECIE}
+CYFRAHEX [0-9a-fA-F]
+HEXTRI {WCIECIE}"#"{CYFRAHEX}{CYFRAHEX}{CYFRAHEX}{CYFRAHEX}{CYFRAHEX}{CYFRAHEX}{WCIECIE}
 LICZBA "&"
 STRING1 \"[^\"]*\"
 STRING2 \'[^\']*\'
@@ -46,9 +47,9 @@ NAPIS {STRING1}|{STRING2}
 
 
  /* identyfikatory */
-"[c:("{DEC_LICZBA}","{DEC_LICZBA}","{DEC_LICZBA}")]"	{
-			 int r,g,b;
-			 sscanf( yytext, "[c:(%d,%d,%d)]",&r,&g,&b );
+"[c:"{HEXTRI}"]"	{
+			 long int hex;
+			 sscanf( yytext, "[c:#%06x]",&hex );
 			 return L_COLOR_START;
 			}
 "[/c]"			{ return L_COLOR_END; }
