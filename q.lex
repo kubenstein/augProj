@@ -18,6 +18,8 @@ enum leksem {
 	L_DEF_END,
 	L_FUNC_CALL
   };
+// wartosc tokena dla bisona, tez tam bedzie przeniesione
+long int yylval;
 %}
 
 
@@ -48,8 +50,7 @@ NAPIS {STRING1}|{STRING2}
 
  /* identyfikatory */
 "[c:"{HEXTRI}"]"	{
-			 long int hex;
-			 sscanf( yytext, "[c:#%06x]",&hex );
+			 sscanf( yytext, "[c:#%06x]",&yylval );
 			 return L_COLOR_START;
 			}
 "[/c]"			{ return L_COLOR_END; }
