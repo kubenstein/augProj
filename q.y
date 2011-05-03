@@ -12,8 +12,14 @@
 %%
 
 input:
-	| input '\n'			{ $$ = $1 }
-	| input L_FUNC_CALL '\n' { printf("void newFunc() {};\n"); }
+	| input '\n'
+	| input L_COLOR_START		{ printf("colorStart: %x\n", yylval); }
+	| input exp
+	| input L_COLOR_END		{ printf("colorEnd\n"); }
+	;
+
+
+exp:	  L_FUNC_CALL			{ printf("funcCALL\n"); }
 	;
 
 %%
