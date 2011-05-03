@@ -87,6 +87,9 @@ NAPIS {STRING1}|{STRING2}
 "*"			{ return '*'; }
 "/"			{ return '/'; }
 
+ /* znak nowej linii */
+"\n"			{ return '\n'; }
+
  /* smietnik */
 {WCIECIE}		{}
 ";"			{}
