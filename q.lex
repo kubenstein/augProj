@@ -31,7 +31,11 @@ NAPIS {STRING1}|{STRING2}
 "#"			{ return L_INT_VAR; }
 
  /* wartosci */ 
-{NAPIS}			{ return L_STRING; }
+{NAPIS}			{ char* napis = malloc ( sizeof(char) * strlen(yytext) ); // malloc! free w bisonie
+			  strcpy( napis, yytext );
+			  yylval = (long int)napis;
+			  return L_STRING;
+			}
 {LICZBA}		{ return L_INT; }
 
 
