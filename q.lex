@@ -37,57 +37,52 @@ NAPIS {STRING1}|{STRING2}
 {WCIECIE}"//"[^"\n"]*	{}
 
  /* zmienne */
-"%"			{ printf("<ZMIENNA_STRINGOWA />" );	return L_STRING_VAR; }
-"#"			{ printf("<ZMIENNA_LICZBOWA />" );	return L_INT_VAR; }
+"%"			{ return L_STRING_VAR; }
+"#"			{ return L_INT_VAR; }
 
  /* wartosci */ 
-{NAPIS}			{ printf("<NAPIS:%s />", yytext );	return L_STRING; }
-{LICZBA}		{ printf("<LICZBA:%s />", yytext );	return L_INT; }
+{NAPIS}			{ return L_STRING; }
+{LICZBA}		{ return L_INT; }
 
 
  /* identyfikatory */
 "[c:("{DEC_LICZBA}","{DEC_LICZBA}","{DEC_LICZBA}")]"	{
 			 int r,g,b;
 			 sscanf( yytext, "[c:(%d,%d,%d)]",&r,&g,&b );
-			 printf("<COLOR:(%d,%d,%d)>", r,g,b ); 
-								return L_COLOR_START;
+			 return L_COLOR_START;
 			}
-"[/c]"			{ printf("</ COLOR>");			return L_COLOR_END; }
+"[/c]"			{ return L_COLOR_END; }
 
 
  /* deklaracje */
 "def"			{
 			 BEGIN( def );
-			 printf("<defFunc>" );
-								return L_FUNC_START;
+			 return L_FUNC_START;
 			}
 "while"			{
 			 BEGIN( def );
-			 printf("<defWhile>" );
-								return L_WHILE_START;
+			 return L_WHILE_START;
 			}
 <def>","		{}
 <def>"\n"		{
 			 BEGIN( INITIAL );
-			 printf("</ def>" );
-								return L_DEF_END;
+			 return L_DEF_END;
 			}
 
  /* wywolanie funkcji */
-"@"			{ printf("<funccall />");		return L_FUNC_CALL; }
+"@"			{ return L_FUNC_CALL; }
 ({NAPIS}|{LICZBA})(","({NAPIS}|{LICZBA}))+ {
-			 printf("<funccall:%s />", yytext);
-								return L_FUNC_CALL;
+			 return L_FUNC_CALL;
 			}
 
  /* operatory */
-"="			{ printf("=");				return '='; }
-"<"			{ printf("<");				return '<'; }
-">"			{ printf(">");				return '>'; }
-"+"			{ printf("+");				return '+'; }
-"-"			{ printf("-");				return '-'; }
-"*"			{ printf("*");				return '*'; }
-"/"			{ printf("/");				return '/'; }
+"="			{ return '='; }
+"<"			{ return '<'; }
+">"			{ return '>'; }
+"+"			{ return '+'; }
+"-"			{ return '-'; }
+"*"			{ return '*'; }
+"/"			{ return '/'; }
 
  /* smietnik */
 {WCIECIE}		{}
