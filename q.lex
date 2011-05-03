@@ -2,6 +2,7 @@
 %{
 void error( char* komunikat ) {
 	fprintf(stdout, "%s: %d\n",komunikat, yylineno );
+	exit(1);
 }
 
 
