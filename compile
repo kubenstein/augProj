@@ -1,0 +1,26 @@
+#!/bin/bash
+echo " * bison -d q.y"
+bison -d q.y
+
+echo " * flex -o q.lex.c q.lex"
+flex -o q.lex.c q.lex
+
+echo " * gcc -o q q.lex.c q.tab.c -lfl -lm"
+gcc -o a.out q.lex.c q.tab.c -lfl -lm 
+
+	if [ "$1" != "" ]
+	then
+	exit
+	fi
+
+echo " * rm q.tab.h"
+rm -f q.tab.h
+
+echo " * rm q.tab.c"
+rm -f q.tab.c
+
+echo " * rm q.lex.c"
+rm -f q.lex.c
+
+echo "-----"
+

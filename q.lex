@@ -1,26 +1,12 @@
 %option yylineno
 %{
+
+#include "q.tab.h"
+
 void error( char* komunikat ) {
 	fprintf(stdout, "%s: %d\n",komunikat, yylineno );
 	exit(1);
 }
-
-
-// def tokenow, pozniej przeniose do bisona
-enum leksem {
-	L_STRING_VAR,
-	L_INT_VAR,
-	L_STRING,
-	L_INT,
-	L_COLOR_START,
-	L_COLOR_END,
-	L_FUNC_START,
-	L_WHILE_START,
-	L_DEF_END,
-	L_FUNC_CALL
-  };
-// wartosc tokena dla bisona, tez tam bedzie przeniesione
-long int yylval;
 %}
 
 
@@ -94,11 +80,4 @@ NAPIS {STRING1}|{STRING2}
 {WCIECIE}		{}
 ";"			{}
 .			{ error("ERR_LEX"); }
-
-%% 
-  
-int main() {
-		while(1) yylex();
-	return 0;
-}
 
