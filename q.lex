@@ -31,9 +31,10 @@ NAPIS {STRING1}|{STRING2}
 "#"			{ return L_INT_VAR; }
 
  /* wartosci */ 
-{NAPIS}			{ char* napis = malloc ( sizeof(char) * strlen(yytext) ); // malloc! free w bisonie
+{NAPIS}			{
+			  char* napis = malloc ( sizeof(char) * strlen(yytext) ); // malloc! free w bisonie
 			  strcpy( napis, yytext );
-			  yylval = (long int)napis;
+			  yylval.string = napis;
 			  return L_STRING;
 			}
 {LICZBA}		{ return L_INT; }
@@ -41,10 +42,13 @@ NAPIS {STRING1}|{STRING2}
 
  /* identyfikatory */
 "[c:"{HEXTRI}"]"	{
-			 sscanf( yytext, "[c:#%06x]",&yylval );
-			 return L_COLOR_START;
+			  sscanf( yytext, "[c:#%06x]",&yylval.color );
+			  return L_COLOR_START;
 			}
-"[/c]"			{ return L_COLOR_END; }
+"[/c]"			{
+			  yylval.color = 0;
+			  return L_COLOR_END;
+			}
 
 
  /* deklaracje */

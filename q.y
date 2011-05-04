@@ -1,7 +1,12 @@
 %{
 #include <stdio.h>
-#define YYSTYPE long int
 %}
+
+// yylval
+%union {
+	long int color;
+	char* string;
+}
 
 %token L_STRING_VAR L_INT_VAR
 %token L_STRING L_INT
@@ -25,13 +30,13 @@ exp:	  int
 	;
 
 
-int:	  L_INT_VAR			{ printf("int intZm_%06x", yylval); } // jesli nie ma takiej zmiennej to "int" na poczatku
-	| L_INT				{ printf("0x%x", yylval); }
+int:	  L_INT_VAR			{ printf("int intZm_%06x", yylval.color); } // jesli nie ma takiej zmiennej to "int" na poczatku
+	| L_INT				{ printf("0x%x", yylval.color); }
 	;
 
 
-string:	  L_STRING_VAR			{ printf("string stringZm_%06x", yylval); } // jesli nie ma takiej zmiennej to "string" na poczatku
-	| L_STRING			{ printf("%s", (char*)yylval); free((char*)yylval); }
+string:	  L_STRING_VAR			{ printf("string stringZm_%06x", yylval.color); } // jesli nie ma takiej zmiennej to "string" na poczatku
+	| L_STRING			{ printf("%s", yylval.string); free(yylval.string); }
 	;
 
 %%
