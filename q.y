@@ -1,7 +1,6 @@
 %{
 #include <stdio.h>
 #define YYSTYPE long int
-long int color = 0;
 %}
 
 %token L_STRING_VAR L_INT_VAR
@@ -14,9 +13,9 @@ long int color = 0;
 
 input:
 	| input '\n'			{ printf(";\n"); }
-	| input L_COLOR_START		{ /*printf("colorStart: %x\n", yylval);*/ color = yylval; } // jesli nie color!=0 to error
+	| input L_COLOR_START		{ /*printf("colorStart: %x\n", yylval);*/ } // jesli nie yylval!=0 to error
 	| input exp
-	| input L_COLOR_END		{ /*printf("colorEnd\n");*/ color = 0; }
+	| input L_COLOR_END		{ /*printf("colorEnd\n");*/ }
 	;
 
 
@@ -26,12 +25,12 @@ exp:	  int
 	;
 
 
-int:	  L_INT_VAR			{ printf("int intZm_%x", color); } // jesli nie ma takiej zmiennej to "int" na poczatku
-	| L_INT				{ printf("0x%x", color); }
+int:	  L_INT_VAR			{ printf("int intZm_%06x", yylval); } // jesli nie ma takiej zmiennej to "int" na poczatku
+	| L_INT				{ printf("0x%x", yylval); }
 	;
 
 
-string:	  L_STRING_VAR			{ printf("string stringZm_%x", color); } // jesli nie ma takiej zmiennej to "string" na poczatku
+string:	  L_STRING_VAR			{ printf("string stringZm_%06x", yylval); } // jesli nie ma takiej zmiennej to "string" na poczatku
 	| L_STRING			{ printf("%s", (char*)yylval); free((char*)yylval); }
 	;
 
