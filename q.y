@@ -43,6 +43,8 @@ int:		L_COLOR_START int_ L_COLOR_END
 int_:				L_INT				{ printf("%d", yylval.color); }
 
 assign:		L_COLOR_START assign_ L_COLOR_END
+		| assign_
+		;
 assign_:			'='				{ printf(" = "); }
 
 
