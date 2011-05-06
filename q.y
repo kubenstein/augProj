@@ -23,6 +23,7 @@ input:
 
 exp:	| stringVar assign string
 	| intVar assign int
+	| funcDef L_DEF_END
 	;
 
 
@@ -43,6 +44,14 @@ int_:				L_INT				{ printf("%d", yylval.color); }
 
 assign:		L_COLOR_START assign_ L_COLOR_END
 assign_:			'='				{ printf(" = "); }
+
+
+funcDef:	L_COLOR_START funcDef_ L_COLOR_END funcArgs	{ printf("void* nArg) {} "); }
+funcDef_:			L_FUNC_START			{ printf("void function_%06x( ", yylval.color); }
+funcArgs:
+		| stringVar 	{ printf(","); } funcArgs
+		| intVar 	{ printf(","); } funcArgs
+		;
 
 
 %%
