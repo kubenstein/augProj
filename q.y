@@ -17,27 +17,33 @@
 %%
 
 input:
-	| input '\n'			{ printf(";\n"); }
-	| input L_COLOR_START		{ /*printf("colorStart: %x\n", yylval);*/ } // jesli nie yylval!=0 to error
-	| input exp
-	| input L_COLOR_END		{ /*printf("colorEnd\n");*/ }
+	| input exp {printf(" ");} input '\n'		{ printf(";\n"); }
 	;
 
 
-exp:	  int
-	| string
-	| '='				{ printf("="); }
+exp:	| stringVar assign string
+	| intVar assign int
 	;
 
 
-int:	  L_INT_VAR			{ printf("int intZm_%06x", yylval.color); } // jesli nie ma takiej zmiennej to "int" na poczatku
-	| L_INT				{ printf("0x%x", yylval.color); }
-	;
+stringVar:	L_COLOR_START stringVar_ L_COLOR_END
+stringVar_:			L_STRING_VAR			{ printf("string strZm_%06x", yylval.color); }
 
 
-string:	  L_STRING_VAR			{ printf("string stringZm_%06x", yylval.color); } // jesli nie ma takiej zmiennej to "string" na poczatku
-	| L_STRING			{ printf("%s", yylval.string); free(yylval.string); }
-	;
+intVar:	  	L_COLOR_START intVar_ L_COLOR_END
+intVar_:			L_INT_VAR			{ printf("int intZm_%06x", yylval.color); }
+
+
+string:		L_COLOR_START string_ L_COLOR_END
+string_:			L_STRING			{ printf("%s", yylval.string); }
+
+
+int:		L_COLOR_START int_ L_COLOR_END
+int_:				L_INT				{ printf("%d", yylval.color); }
+
+assign:		L_COLOR_START assign_ L_COLOR_END
+assign_:			'='				{ printf(" = "); }
+
 
 %%
 
