@@ -21,11 +21,14 @@ input:
 	;
 
 
-exp:	| stringVar assign string
+exp:	| pustaInstrukcja
+	| stringVar assign string
 	| intVar assign int
 	| funcDef L_DEF_END
 	;
 
+
+pustaInstrukcja: L_COLOR_START L_COLOR_END
 
 stringVar:	L_COLOR_START stringVar_ L_COLOR_END
 stringVar_:			L_STRING_VAR			{ printf("string strZm_%06x", yylval.color); }
@@ -53,6 +56,7 @@ funcDef_:			L_FUNC_START			{ printf("void function_%06x( ", yylval.color); }
 funcArgs:
 		| stringVar 	{ printf(","); } funcArgs
 		| intVar 	{ printf(","); } funcArgs
+		| pustaInstrukcja		 funcArgs
 		;
 
 
