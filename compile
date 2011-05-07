@@ -1,4 +1,6 @@
 #!/bin/bash
+rm -f a.out
+
 echo " * bison -d q.y"
 bison -d q.y
 
