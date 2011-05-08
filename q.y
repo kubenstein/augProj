@@ -26,6 +26,7 @@ exp:	| pustaInstrukcja
 	| intVar assign int
 	| funcDef L_DEF_END
 	| whileDef L_DEF_END
+	| funcExec
 	;
 
 
@@ -93,6 +94,13 @@ logicOpr: 	  compare
 		| lessThen
 		| moreThen
 		;
+
+
+ /* wywolanie funkcji */
+funcExec:	  	L_COLOR_START funcExec_ L_COLOR_END
+funcExec_:			L_FUNC_CALL			{ printf("function_%06x()", yylval.color); }
+
+
 %%
 
 int yyerror( char* komunikat ) {
