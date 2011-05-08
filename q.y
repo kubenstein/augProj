@@ -41,7 +41,7 @@ intVar_:			L_INT_VAR			{ printf("int intZm_%06x", yylval.color); }
 
 
 string:		L_COLOR_START string_ L_COLOR_END
-string_:			L_STRING			{ printf("%s", yylval.string); }
+string_:			L_STRING			{ printf("\"%s\"", yylval.string); free( yylval.string) }
 
 
 int:		L_COLOR_START int_ L_COLOR_END
