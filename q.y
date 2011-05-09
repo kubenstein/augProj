@@ -19,17 +19,18 @@
 %%
 
 input:
-	| input exp {printf(" ");} input '\n'		{ printf(";\n"); }
+	| input exp {printf(" ");} input
+	| input '\n'
 	;
 
 
-exp:	| pustaInstrukcja
-	| stringVar assign string
-	| intVar assign int
+exp:	  pustaInstrukcja
+	| stringVar assign string 				{ printf(";\n"); }
+	| intVar assign int					{ printf(";\n"); }
 	| funcDef
 	| whileDef
-	| funcExec
-	| end
+	| funcExec						{ printf(";\n"); }
+	| end							{ printf(";\n"); }
 	;
 
 
