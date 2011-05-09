@@ -64,17 +64,17 @@ NAPIS {STRING1}|{STRING2}
 			 BEGIN( def );
 			 return L_WHILE_START;
 			}
-<def>","		{}
 <def>"\n"		{
 			 BEGIN( INITIAL );
 			 return L_DEF_END;
 			}
+"end"			{ return L_END; }
+
 
  /* wywolanie funkcji */
 "@"			{ return L_FUNC_CALL; }
-({NAPIS}|{LICZBA})(","({NAPIS}|{LICZBA}))+ {
-			 return L_FUNC_CALL;
-			}
+<INITIAL,def>","[^\n]	{ BEGIN(def); }
+
 
  /* operatory */
 "="			{ return '='; }
@@ -85,8 +85,10 @@ NAPIS {STRING1}|{STRING2}
 "*"			{ return '*'; }
 "/"			{ return '/'; }
 
+
  /* znak nowej linii */
 "\n"			{ return '\n'; }
+
 
  /* smietnik */
 {WCIECIE}		{}
