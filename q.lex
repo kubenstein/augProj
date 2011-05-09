@@ -66,14 +66,17 @@ NAPIS {STRING1}|{STRING2}
 			}
 <def>"\n"		{
 			 BEGIN( INITIAL );
+			 yyless(0);
 			 return L_DEF_END;
 			}
 "end"			{ return L_END; }
 
 
  /* wywolanie funkcji */
-"@"			{ return L_FUNC_CALL; }
-<INITIAL,def>","[^\n]	{ BEGIN(def); }
+"@"			{
+			 BEGIN( def );
+			 return L_FUNC_CALL;
+			}
 
 
  /* operatory */
