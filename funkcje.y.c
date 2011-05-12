@@ -64,3 +64,56 @@ void endDefFunc() {
 	resetTemp();
 }
 
+
+
+/* funkcje wywolywujace funkcje */
+
+int czyTeSameParametry( funkcja f1, funkcja f2 ) {
+		int p = 0;
+		while( f1.parametryTyp[ p ] != -1 ) {
+			if( f1.parametryTyp[ p ] != f2.parametryTyp[ p ] )
+			return 0; // znaleziono nieidentycznosc
+		p++;
+		}
+	return 1; // wszystkie params sa takie same
+}
+
+
+void startCallFunc( long int idFunkcji ) {
+	resetTemp();
+	temp.idFunkcji = idFunkcji;
+
+	// wyswietlenie kodu C
+	printf("function_%06x(", idFunkcji );
+}
+
+
+void addParamCallFunc( long int idZmiennej, int typ ) {
+		int i = 0;
+		while( temp.parametryTyp[ i ] != -1 ) i++; // znajdz koniec
+	temp.parametryId[ i ] = idZmiennej;
+	temp.parametryTyp[ i ] = typ;
+	temp.parametryTyp[ i+1 ] = -1;
+
+	// wyswietlenie kodu C
+	printf(", ");
+}
+
+
+void endCallFunc() {
+	int ok = 0;
+		int i;
+		for( i = 0; i < funkcjeSize; i++ )
+			if( funkcje[ i ].idFunkcji == temp.idFunkcji )
+				if( czyTeSameParametry( funkcje[ i ], temp ) ) {
+				ok = 1;
+				break;
+				}
+
+
+		if( !ok ) exit(-1); // funkcja nie zostala znaleziona
+
+	// wyswietlenie kodu C
+	printf("NULL)");
+}
+

@@ -85,9 +85,9 @@ moreThen_:			'>'				{ printf(" > "); }
 funcDef:	L_COLOR_START funcDef_ L_COLOR_END funcDefArgs L_DEF_END	{ globalnyStos(); endDefFunc(); }
 funcDef_:			L_FUNC_START			{ nowyStos(); startDefFunc( yylval.color); }
 funcDefArgs:
-		| stringVar 	{ printf(","); } funcDefArgs
-		| intVar 	{ addParamDefFunc( $1, 0); } funcDefArgs
-		| pustaInstrukcja		 funcDefArgs
+		| stringVar 	{ printf(","); }		funcDefArgs
+		| intVar 	{ addParamDefFunc( $1, 0); }	funcDefArgs
+		| pustaInstrukcja				funcDefArgs
 		;
 
 
@@ -109,14 +109,14 @@ end:		L_COLOR_START end_ L_COLOR_END
 end_:				L_END				{ printf("}"); globalnyStos(); }
 
  /* wywolanie funkcji */
-funcExec:	L_COLOR_START funcExec_ L_COLOR_END funcParam L_DEF_END	{ printf("NULL)"); }
-funcExec_:			L_FUNC_CALL			{ printf("function_%06x(", yylval.color); }
+funcExec:	L_COLOR_START funcExec_ L_COLOR_END funcParam L_DEF_END	{ endCallFunc(); }
+funcExec_:			L_FUNC_CALL			{ startCallFunc( yylval.color ); }
 funcParam:
-		| stringVar 	{ printf(","); } funcParam
-		| intVar 	{ printf(","); } funcParam
-		| string 	{ printf(","); } funcParam
-		| int	 	{ printf(","); } funcParam
-		| pustaInstrukcja		 funcParam
+		| stringVar 	{ printf(","); }		funcParam
+		| intVar 	{ addParamCallFunc( $1, 0); }	funcParam
+		| string 	{ printf(","); }		funcParam
+		| int	 	{ printf(","); }		funcParam
+		| pustaInstrukcja				funcParam
 		;
 %%
 
