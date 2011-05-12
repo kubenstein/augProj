@@ -12,11 +12,14 @@
 
 %token L_STRING_VAR L_INT_VAR
 %token L_STRING L_INT
-%token L_COLOR_START L_COLOR_END
+%token <color> L_COLOR_START
+%token L_COLOR_END
 %token L_FUNC_START L_WHILE_START L_DEF_END
 %token L_FUNC_CALL
 %token L_END
 %start input
+
+%type <color> intVar
 %%
 
 input:
@@ -42,7 +45,7 @@ stringVar:	L_COLOR_START stringVar_ L_COLOR_END
 stringVar_:			L_STRING_VAR			{ printf("string strZm_%06x", yylval.color); }
 
 
-intVar:	  	L_COLOR_START intVar_ L_COLOR_END
+intVar:	  	L_COLOR_START intVar_ L_COLOR_END		{ $$ = $1; }
 intVar_:			L_INT_VAR			{ initInt( yylval.color ); }
 
 
@@ -83,7 +86,7 @@ funcDef:	L_COLOR_START funcDef_ L_COLOR_END funcDefArgs L_DEF_END	{ globalnyStos
 funcDef_:			L_FUNC_START			{ nowyStos(); startDefFunc( yylval.color); }
 funcDefArgs:
 		| stringVar 	{ printf(","); } funcDefArgs
-		| intVar 	{ printf(","); } funcDefArgs	{ addParamDefFunc( yylval.color, 0);}
+		| intVar 	{ addParamDefFunc( $1, 0); } funcDefArgs
 		| pustaInstrukcja		 funcDefArgs
 		;
 

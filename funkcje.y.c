@@ -39,6 +39,10 @@ void addParamDefFunc( long int idZmiennej, int typ ) {
 		while( temp.parametryTyp[ i ] != -1 ) i++; // znajdz koniec
 	temp.parametryId[ i ] = idZmiennej;
 	temp.parametryTyp[ i ] = typ;
+	temp.parametryTyp[ i+1 ] = -1;
+
+	// wyswietlenie kodu C
+	printf(", ");
 }
 
 // ToDO: sprawdzanie tez po parametrach
