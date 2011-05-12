@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+/* stos zmiennych intowych */
 int zmienneInt[1000];
 int zmienneIntSize = 0;
 

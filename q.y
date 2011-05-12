@@ -1,6 +1,7 @@
 %{
 #include <stdio.h>
-#include "logic.y.c"
+#include "zmienneIntowe.y.c"
+#include "funkcje.y.c"
 %}
 
 // yylval
@@ -78,11 +79,11 @@ moreThen_:			'>'				{ printf(" > "); }
 
 
  /* deklaracja funkcji */
-funcDef:	L_COLOR_START funcDef_ L_COLOR_END funcDefArgs L_DEF_END	{ printf("void* nArg) {\n"); }
-funcDef_:			L_FUNC_START			{ printf("void function_%06x( ", yylval.color); nowyStos(); }
+funcDef:	L_COLOR_START funcDef_ L_COLOR_END funcDefArgs L_DEF_END	{ globalnyStos(); endDefFunc(); }
+funcDef_:			L_FUNC_START			{ nowyStos(); startDefFunc( yylval.color); }
 funcDefArgs:
 		| stringVar 	{ printf(","); } funcDefArgs
-		| intVar 	{ printf(","); } funcDefArgs
+		| intVar 	{ printf(","); } funcDefArgs	{ addParamDefFunc( yylval.color, 0);}
 		| pustaInstrukcja		 funcDefArgs
 		;
 
