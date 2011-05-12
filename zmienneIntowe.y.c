@@ -1,5 +1,5 @@
-#include <stdio.h>
-#include <stdlib.h>
+#include "globalne.y.c"
+
 
 /* stos zmiennych intowych */
 int zmienneInt[1000];
@@ -28,6 +28,9 @@ void initInt( long int idZmiennej ) {
 			return;
 			}
 		}
+
+		if( NOINITIALIZE_NEW_VARS_FLAG ) exit(-1); // brak zmiennej
+
 	tablica[ (*dlugosc)++ ] = idZmiennej;
 	printf("int intZm_%06x", idZmiennej );
 }

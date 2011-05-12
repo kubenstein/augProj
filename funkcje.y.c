@@ -1,5 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
+#include "globalne.y.c"
 
 // struktura funkcji
 typedef struct {
@@ -83,6 +82,8 @@ void startCallFunc( long int idFunkcji ) {
 	resetTemp();
 	temp.idFunkcji = idFunkcji;
 
+	NOINITIALIZE_NEW_VARS_FLAG = 1;
+
 	// wyswietlenie kodu C
 	printf("function_%06x(", idFunkcji );
 }
@@ -112,6 +113,8 @@ void endCallFunc() {
 
 
 		if( !ok ) exit(-1); // funkcja nie zostala znaleziona
+
+	NOINITIALIZE_NEW_VARS_FLAG = 0;
 
 	// wyswietlenie kodu C
 	printf("NULL)");

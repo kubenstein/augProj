@@ -1,5 +1,6 @@
 %{
 #include <stdio.h>
+#include "globalne.y.c"
 #include "zmienneIntowe.y.c"
 #include "funkcje.y.c"
 %}
