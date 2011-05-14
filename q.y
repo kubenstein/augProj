@@ -3,6 +3,7 @@
 #include "globalne.y.c"
 #include "zmienneIntowe.y.c"
 #include "funkcje.y.c"
+#include "while.y.c"
 %}
 
 %locations
@@ -95,8 +96,8 @@ funcDefArgs:
 
 
  /* deklaracja petli */
-whileDef:	L_COLOR_START whileDef_ L_COLOR_END whileCon L_DEF_END	{ printf(") {\n"); }
-whileDef_:			L_WHILE_START			{ printf("while( "); }
+whileDef:	L_COLOR_START whileDef_ L_COLOR_END whileCon L_DEF_END	{ endWhile(); }
+whileDef_:			L_WHILE_START			{ startWhile(); }
 whileCon:	  conExp logicOpr conExp
 conExp:		  intVar
 		| int
