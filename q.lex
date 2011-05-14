@@ -3,8 +3,8 @@
 
 #include "q.tab.h"
 
-void error( char* komunikat ) {
-	fprintf(stdout, "%s: %d\n",komunikat, yylineno );
+void flexError() {
+	fprintf(stdout, "FLEX_ERR: unknown token at line: %d\n", yylineno );
 	exit(1);
 }
 %}
@@ -96,5 +96,5 @@ NAPIS {STRING1}|{STRING2}
  /* smietnik */
 {WCIECIE}		{}
 ";"			{}
-.			{ error("ERR_LEX"); }
+.			{ flexError(); }
 

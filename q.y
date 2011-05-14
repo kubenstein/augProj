@@ -5,6 +5,8 @@
 #include "funkcje.y.c"
 %}
 
+%locations
+
 // yylval
 %union {
 	long int color;
@@ -30,12 +32,12 @@ input:
 
 
 exp:	  pustaInstrukcja
-	| stringVar assign string 				{ printf(";\n"); }
-	| intVar assign int					{ printf(";\n"); }
+	| stringVar assign string 				{ p_s(); }
+	| intVar assign int					{ p_s(); }
 	| funcDef
 	| whileDef
-	| funcExec						{ printf(";\n"); }
-	| end							{ printf(";\n"); }
+	| funcExec						{ p_s(); }
+	| end							{ p_s(); }
 	;
 
 
@@ -86,7 +88,7 @@ moreThen_:			'>'				{ printf(" > "); }
 funcDef:	L_COLOR_START funcDef_ L_COLOR_END funcDefArgs L_DEF_END	{ globalnyStos(); endDefFunc(); }
 funcDef_:			L_FUNC_START			{ nowyStos(); startDefFunc( yylval.color); }
 funcDefArgs:
-		| stringVar 	{ printf(","); }		funcDefArgs
+		| stringVar 	{ p_p(); }			funcDefArgs
 		| intVar 	{ addParamDefFunc( $1, 0); }	funcDefArgs
 		| pustaInstrukcja				funcDefArgs
 		;
@@ -113,17 +115,19 @@ end_:				L_END				{ printf("}"); globalnyStos(); }
 funcExec:	L_COLOR_START funcExec_ L_COLOR_END funcParam L_DEF_END	{ endCallFunc(); }
 funcExec_:			L_FUNC_CALL			{ startCallFunc( yylval.color ); }
 funcParam:
-		| stringVar 	{ printf(","); }		funcParam
+		| stringVar 	{ p_p(); }			funcParam
 		| intVar 	{ addParamCallFunc( $1, 0); }	funcParam
-		| string 	{ printf(","); }		funcParam
-		| int	 	{ printf(","); }		funcParam
+		| string 	{ p_p(); }			funcParam
+		| int	 	{ p_p(); }			funcParam
 		| pustaInstrukcja				funcParam
 		;
 %%
 
 int yyerror( char* komunikat ) {
-	printf("ERR_BISON: %s\n", komunikat );
+	fprintf(stdout, "ERR_BISON: %s at line: %d\n", komunikat, yylloc.first_line );
+	exit(1);
 }
+
 
 int main() {
 	yyparse();
