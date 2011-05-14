@@ -8,14 +8,13 @@ int zmienneIntSize = 0;
 int funcDefZmienneInt[1000];
 int funcDefZmienneIntSize = 0;
 
-int czyNowyStos = 0;
 
 void initInt( long int idZmiennej ) {
 	int* tablica = zmienneInt;
 	int* dlugosc = &zmienneIntSize;
 
 
-		if( czyNowyStos ) {
+		if( NEWHEAP_FOR_VARS_FLAG ) {
 		tablica = funcDefZmienneInt;
 		dlugosc = &funcDefZmienneIntSize;
 		}
@@ -37,12 +36,12 @@ void initInt( long int idZmiennej ) {
 
 void nowyStos() {
 	funcDefZmienneIntSize = 0;
-	czyNowyStos = 1;
+	NEWHEAP_FOR_VARS_FLAG = 1;
 }
 
 
 void globalnyStos() {
-	czyNowyStos = 0;
+	NEWHEAP_FOR_VARS_FLAG = 0;
 }
 
 
