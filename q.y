@@ -97,6 +97,8 @@ funcDefArgs:
 
  /* deklaracja petli */
 whileDef:	L_COLOR_START whileDef_ L_COLOR_END whileCon L_DEF_END	{ endWhile(); }
+		| whileDef_ whileCon L_DEF_END			{ endWhile(); }
+		;
 whileDef_:			L_WHILE_START			{ startWhile(); }
 whileCon:	  conExp logicOpr conExp
 conExp:		  intVar
