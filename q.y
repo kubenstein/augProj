@@ -27,7 +27,7 @@
 %%
 
 input:
-	| input exp {printf(" ");} input
+	| input exp {p(" ");} input
 	| input '\n'
 	;
 
@@ -64,25 +64,25 @@ int_:				L_INT				{ printf("%d", yylval.color); }
 assign:		L_COLOR_START assign_ L_COLOR_END
 		| assign_
 		;
-assign_:			'='				{ printf(" = "); }
+assign_:			'='				{ p(" = "); }
 
 
 compare:	L_COLOR_START compare_ L_COLOR_END
 		| compare_
 		;
-compare_:			'='				{ printf(" == "); }
+compare_:			'='				{ p(" == "); }
 
 
 lessThen:	L_COLOR_START lessThen_ L_COLOR_END
 		| lessThen_
 		;
-lessThen_:			'<'				{ printf(" < "); }
+lessThen_:			'<'				{ p(" < "); }
 
 
 moreThen:	L_COLOR_START moreThen_ L_COLOR_END
 		| moreThen_
 		;
-moreThen_:			'>'				{ printf(" > "); }
+moreThen_:			'>'				{ p(" > "); }
 
 
  /* deklaracja funkcji */

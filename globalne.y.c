@@ -11,8 +11,9 @@ int NEWHEAP_FOR_VARS_FLAG = 0;		// czy odkladac zadeklarowane zmienne na nowym s
 
 
 /* globalne funkcje */
-void p_s() {	printf(";\n");	}
-void p_p() {	printf(",");	}
+void p( const char* k ) { printf(k); }
+void p_s() { p(";\n");	}
+void p_p() { p(",");	}
 
 
 #endif
