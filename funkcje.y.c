@@ -1,6 +1,6 @@
 #include "globalne.y.c"
 
-// struktura funkcji
+/* struktura funkcji */
 typedef struct {
 	long int idFunkcji;
 	long int parametryId[1000];
@@ -8,8 +8,23 @@ typedef struct {
 } funkcja;
 
 
-funkcja temp;
 
+/* funkcje bledu */
+void noFuncError( long int idFunkcji ) {
+	fprintf( stdout, "ERR_COMPILE: no function to call: #%06x\n", idFunkcji );
+	exit(1);
+}
+
+
+void alreadyExistsFuncError( long int idFunkcji ) {
+	fprintf( stdout, "ERR_COMPILE: function already exists: #%06x\n", idFunkcji );
+	exit(1);
+}
+
+
+
+/* zmienna pomocnicza */
+funkcja temp;
 
 void resetTemp() {
 	temp.idFunkcji = -1;
@@ -17,9 +32,11 @@ void resetTemp() {
 }
 
 
+
 /* stos funkcji */
 funkcja funkcje[1000];
 int funkcjeSize = 0;
+
 
 
 /* funkcje tworzace funkcje */
@@ -41,7 +58,7 @@ void addParamDefFunc( long int idZmiennej, int typ ) {
 	temp.parametryTyp[ i+1 ] = -1;
 
 	// wyswietlenie kodu C
-	printf(", ");
+	p_p();
 }
 
 // ToDO: sprawdzanie tez po parametrach
@@ -49,7 +66,7 @@ void endDefFunc() {
 		int i;
 		for( i = 0; i < funkcjeSize; i++ ) {
 			if( funkcje[ i ].idFunkcji == temp.idFunkcji ) { // taka samo idFunkcji
-			exit(-1);
+			alreadyExistsFuncError( temp.idFunkcji );
 			}
 		}
 
@@ -97,7 +114,7 @@ void addParamCallFunc( long int idZmiennej, int typ ) {
 	temp.parametryTyp[ i+1 ] = -1;
 
 	// wyswietlenie kodu C
-	printf(", ");
+	p_p();
 }
 
 
@@ -112,7 +129,7 @@ void endCallFunc() {
 				}
 
 
-		if( !ok ) exit(-1); // funkcja nie zostala znaleziona
+		if( !ok ) noFuncError( temp.idFunkcji ); // funkcja nie zostala znaleziona
 
 	NOINITIALIZE_NEW_VARS_FLAG = 0;
 
