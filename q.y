@@ -54,6 +54,8 @@ intVar_:			L_INT_VAR			{ initInt( yylval.color ); }
 
 
 string:		L_COLOR_START string_ L_COLOR_END
+		| string_
+		;
 string_:			L_STRING			{ printf("\"%s\"", yylval.string); free( yylval.string) }
 
 
@@ -120,7 +122,7 @@ funcExec_:			L_FUNC_CALL			{ startCallFunc( yylval.color ); }
 funcParam:
 		| stringVar 	{ p_p(); }			funcParam
 		| intVar 	{ addParamCallFunc( $1, 0); }	funcParam
-		| string 	{ p_p(); }			funcParam
+		| string 	{ addParamCallFunc( 0, 1); }	funcParam
 		| int	 	{ p_p(); }			funcParam
 		| pustaInstrukcja				funcParam
 		;
