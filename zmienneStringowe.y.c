@@ -7,11 +7,35 @@ void noStringVarError( long int idZmiennej ) {
 }
 
 
+
+/* funkcje wyswietlajace wyrazenia */
+void stringVar_assign_string( char* s1, char* s2, char* s3 ) {
+	char ids1[10];
+	sscanf(s1, "%*s stringZm_%s",ids1);
+
+	printf("%s = malloc( sizeof(char) * strlen(\"%s\"));",s1,s3);
+	printf("strcpy( stringZm_%s,\"%s\");",ids1,s3);
+	free(s1);
+	free(s2);
+	free(s3);
+}
+
+
+void stringVar_assign_stringVar( char* s1, char* s2, char* s3 ) {
+	// ...
+	free(s1);
+	free(s2);
+	free(s3);
+}
+
+
+
 /* funkcja inicjujaca zminna */
-void initString( long int idZmiennej ) {
+char* initString( long int idZmiennej ) {
 	int* tablica = zmienneString;
 	int* dlugosc = &zmienneStringSize;
 
+	char* out;
 
 		if( NEWHEAP_FOR_VARS_FLAG ) {
 		tablica = funcDefZmienneString;
@@ -23,9 +47,10 @@ void initString( long int idZmiennej ) {
 		for( i = 0; i < *dlugosc; i++ ) {
 			if( tablica[i] == idZmiennej ) {
 
-			// wyswietlenie kodu c
-			printf("stringZm_%06x", idZmiennej );
-			return;
+			// out
+			out = malloc( sizeof(char) * 16 );
+			sprintf( out, "stringZm_%06x", idZmiennej );
+			return out;
 			}
 		}
 
@@ -33,6 +58,9 @@ void initString( long int idZmiennej ) {
 
 	tablica[ (*dlugosc)++ ] = idZmiennej;
 
-	// wyswietlenie kodu c
-	printf("char* stringZm_%06x", idZmiennej );
+
+	// out
+	out = malloc( sizeof(char) * 22 );
+	sprintf( out, "char* stringZm_%06x", idZmiennej );
+	return out;
 }

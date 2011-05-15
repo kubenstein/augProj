@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #ifndef GLOBALNE_GUARD
 #define GLOBALNE_GUARD
@@ -15,6 +16,20 @@ int NEWHEAP_FOR_VARS_FLAG = 0;		// czy odkladac zadeklarowane zmienne na nowym s
 void p( const char* k ) { printf(k); }
 void p_s() { p(";\n");	}
 void p_p() { p(",");	}
+char* rs( const char* in ) {
+	char* out = malloc( sizeof(char) * strlen( in ) ); // bison zrobi free
+	strcpy( out, in );
+	return out;
+}
+
+char* ri( long int in ) {
+	char temp[50];
+	sprintf( temp, "%d", in );
+
+	char* out = malloc( sizeof(char) * strlen( temp ) ); // bison zrobi free
+	strcpy( out, temp );
+	return out;
+}
 
 
 

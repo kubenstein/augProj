@@ -7,10 +7,29 @@ void noIntVarError( long int idZmiennej ) {
 }
 
 
+
+/* funkcje wyswietlajace wyrazenia */
+void intVar_assign_int( char* s1, char* s2, char* s3 ) {
+	printf("%s %s %s;",s1,s2,s3);
+	free(s1);
+	free(s2);
+	free(s3);
+}
+
+
+void intVar_assign_intVar( char* s1, char* s2, char* s3 ) {
+	intVar_assign_int(s1,s2,s3); // tak sie sklada ze wyswietla sie tak samo
+	NOINITIALIZE_NEW_VARS_FLAG = 0;
+}
+
+
+
 /* funkcja inicjujaca zminna */
-void initInt( long int idZmiennej ) {
+char* initInt( long int idZmiennej ) {
 	int* tablica = zmienneInt;
 	int* dlugosc = &zmienneIntSize;
+
+	char* out;
 
 
 		if( NEWHEAP_FOR_VARS_FLAG ) {
@@ -23,10 +42,10 @@ void initInt( long int idZmiennej ) {
 		for( i = 0; i < *dlugosc; i++ ) {
 			if( tablica[i] == idZmiennej ) {
 
-			// wyswietlenie kodu c
-			printf("intZm_%06x", idZmiennej );
-
-			return;
+			// out
+			out = malloc( sizeof(char) * 13 );
+			sprintf(out, "intZm_%06x", idZmiennej );
+			return out;
 			}
 		}
 
@@ -34,6 +53,9 @@ void initInt( long int idZmiennej ) {
 
 	tablica[ (*dlugosc)++ ] = idZmiennej;
 
-	// wyswietlenie kodu c
-	printf("int intZm_%06x", idZmiennej );
+	// out
+	out = malloc( sizeof(char) * 17 );
+	sprintf(out, "int intZm_%06x", idZmiennej );
+
+	return out;
 }

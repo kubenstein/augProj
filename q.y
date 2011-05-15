@@ -24,8 +24,14 @@
 %token L_END
 %start input
 
-%type <color> intVar
-%type <color> stringVar
+%type <string> intVar intVar_ intVarDecl intVarDecl_
+%type <string> stringVar stringVar_ stringVarDecl stringVarDecl_
+%type <string> int
+%type <string> string string_
+%type <string> assign assign_
+%type <string> compare compare_
+%type <string> lessThen lessThen_
+%type <string> moreThen moreThen_
 %%
 
 input:
@@ -35,102 +41,75 @@ input:
 
 
 exp:	  pustaInstrukcja
-	| stringVar assign string 				{ p_s(); }
-	| intVar assign int					{ p_s(); }
-	| intVar assign intVar					{ p_s(); }
-	| funcDef
-	| whileDef
-	| funcExec						{ p_s(); }
-	| end							{ p_s(); }
+	| stringVar assign string 				{ stringVar_assign_string($1,$2,$3); }
+	| stringVar assign stringVarDecl			{ stringVar_assign_stringVar($1,$2,$3); }
+	| intVar assign int					{ intVar_assign_int($1,$2,$3); }
+	| intVar assign intVarDecl				{ intVar_assign_intVar($1,$2,$3); }
 	;
 
 
 pustaInstrukcja: L_COLOR_START L_COLOR_END
 
  /* zmienne i wartosci */
-stringVar:	L_COLOR_START stringVar_ L_COLOR_END		{ $$ = $1; }
-stringVar_:			L_STRING_VAR			{ initString( yylval.color ); }
+stringVar:	L_COLOR_START stringVar_ L_COLOR_END		{ $$ = $2; }
+stringVar_:			L_STRING_VAR			{ $$ = initString( yylval.color ); }
 
 
-intVar:	  	L_COLOR_START intVar_ L_COLOR_END		{ $$ = $1; }
-intVar_:			L_INT_VAR			{ initInt( yylval.color ); }
+stringVarDecl:	L_COLOR_START stringVarDecl_ L_COLOR_END	{ $$ = $2; }
+stringVarDecl_:			L_STRING_VAR			{
+								  NOINITIALIZE_NEW_VARS_FLAG = 1;
+								  char* out = initString( yylval.color );
+								  NOINITIALIZE_NEW_VARS_FLAG = 0;
+								  $$ = out;
+								 }
 
 
-string:		L_COLOR_START string_ L_COLOR_END
-		| string_
+intVar:	  	L_COLOR_START intVar_ L_COLOR_END		{ $$ = $2; }
+intVar_:			L_INT_VAR			{ $$ = initInt( yylval.color ); }
+
+
+intVarDecl:	  	L_COLOR_START intVarDecl_ L_COLOR_END	{ $$ = $2; }
+intVarDecl_:			L_INT_VAR			{
+								  NOINITIALIZE_NEW_VARS_FLAG = 1;
+								  char* out = initInt( yylval.color );
+								  NOINITIALIZE_NEW_VARS_FLAG = 0;
+								  $$ = out;
+								 }
+
+
+string:		L_COLOR_START string_ L_COLOR_END		{ $$ = $2; }
+		| string_					{ $$ = $1; }
 		;
-string_:			L_STRING			{ printf("\"%s\"", yylval.string); free( yylval.string) }
+string_:			L_STRING
 
 
-int:		L_COLOR_START int_ L_COLOR_END
-int_:				L_INT				{ printf("%d", yylval.color); }
+int:		L_COLOR_START int_ L_COLOR_END			{ $$ = ri( $1 ); }
+int_:				L_INT
 
  /* operatory */
-assign:		L_COLOR_START assign_ L_COLOR_END
-		| assign_
+assign:		L_COLOR_START assign_ L_COLOR_END		{ $$ = $2; }
+		| assign_					{ $$ = rs(" = "); }
 		;
-assign_:			'='				{ p(" = "); }
+assign_:			'='
 
 
-compare:	L_COLOR_START compare_ L_COLOR_END
-		| compare_
+compare:	L_COLOR_START compare_ L_COLOR_END		{ $$ = $2; }
+		| compare_					{ $$ = rs(" == "); }
 		;
-compare_:			'='				{ p(" == "); }
+compare_:			'='
 
 
-lessThen:	L_COLOR_START lessThen_ L_COLOR_END
-		| lessThen_
+lessThen:	L_COLOR_START lessThen_ L_COLOR_END		{ $$ = $2; }
+		| lessThen_					{ $$ = rs(" < "); }
 		;
-lessThen_:			'<'				{ p(" < "); }
+lessThen_:			'<'
 
 
-moreThen:	L_COLOR_START moreThen_ L_COLOR_END
-		| moreThen_
+moreThen:	L_COLOR_START moreThen_ L_COLOR_END		{ $$ = $2; }
+		| moreThen_					{ $$ = rs(" > "); }
 		;
-moreThen_:			'>'				{ p(" > "); }
+moreThen_:			'>'
 
-
- /* deklaracja funkcji */
-funcDef:	L_COLOR_START funcDef_ L_COLOR_END funcDefArgs L_DEF_END	{ globalnyStos(); endDefFunc(); }
-funcDef_:			L_FUNC_START			{ nowyStos(); startDefFunc( yylval.color); }
-funcDefArgs:
-		| stringVar 	{ addParamDefFunc( $1, 1); }	funcDefArgs
-		| intVar 	{ addParamDefFunc( $1, 0); }	funcDefArgs
-		| pustaInstrukcja				funcDefArgs
-		;
-
-
- /* deklaracja petli */
-whileDef:	L_COLOR_START whileDef_ L_COLOR_END whileCon L_DEF_END	{ endWhile(); }
-		| whileDef_ whileCon L_DEF_END			{ endWhile(); }
-		;
-whileDef_:			L_WHILE_START			{ startWhile(); }
-whileCon:	  conExp logicOpr conExp
-conExp:		  intVar
-		| int
-		;
-logicOpr: 	  compare
-		| lessThen
-		| moreThen
-		;
-
-
- /* block end */
-end:		L_COLOR_START end_ L_COLOR_END
-		| end_
-		;
-end_:				L_END				{ p("}"); globalnyStos(); }
-
- /* wywolanie funkcji */
-funcExec:	L_COLOR_START funcExec_ L_COLOR_END funcParam L_DEF_END	{ endCallFunc(); }
-funcExec_:			L_FUNC_CALL			{ startCallFunc( yylval.color ); }
-funcParam:
-		| stringVar 	{ addParamCallFunc( $1, 1); }	funcParam
-		| intVar 	{ addParamCallFunc( $1, 0); }	funcParam
-		| string 	{ addParamCallFunc( 0, 1); }	funcParam
-		| int	 	{ addParamCallFunc( 0, 0); }	funcParam
-		| pustaInstrukcja				funcParam
-		;
 %%
 
 int yyerror( char* komunikat ) {
