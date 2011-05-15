@@ -68,7 +68,7 @@ void addIntParamDefFunc( char* idString ) {
 	unsigned int idZmiennej;
 	sscanf( idString,"%*[\" intZm\"]_%06x", &idZmiennej ); // magia! czemu to wycina inta z przodu i dziala jak inta nie ma z przodu tez
 	addParamDefFunc( idZmiennej, 0 );
-
+	free( idString );
 }
 
 
@@ -76,6 +76,7 @@ void addStringParamDefFunc( char* idString ) {
 	unsigned int idZmiennej;
 	sscanf( idString,"%*[\" stringZm\"]_%06x", &idZmiennej ); // magia!
 	addParamDefFunc( idZmiennej, 1 );
+	free( idString );
 }
 
 
@@ -142,7 +143,7 @@ void addIntVarParamCallFunc( char* idString ) {
 	unsigned int idZmiennej;
 	sscanf( idString,"%*[\" intZm\"]_%06x", &idZmiennej ); // magia!
 	addParamCallFunc( idZmiennej, 0 );
-
+	free( idString );
 }
 
 
@@ -150,18 +151,21 @@ void addStringVarParamCallFunc( char* idString ) {
 	unsigned int idZmiennej;
 	sscanf( idString,"%*[\" stringZm\"]_%06x", &idZmiennej ); // magia!
 	addParamCallFunc( idZmiennej, 1 );
+	free( idString );
 }
 
 
 void addIntParamCallFunc( char* wartoscInta ) {
 	printf( "%s,", wartoscInta );
 	addParamCallFunc( -1, 0 ); // -1 czyli nie wyswietlac
+	free( wartoscInta );
 }
 
 
 void addStringParamCallFunc( char* wartoscStringa ) {
 	printf( "\"%s\",", wartoscStringa );
 	addParamCallFunc( -1, 1 ); // -1 czyli nie wyswietlac
+	free( wartoscStringa );
 }
 
 
