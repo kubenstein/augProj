@@ -66,7 +66,7 @@ void addParamDefFunc( long int idZmiennej, int typ ) {
 
 void addIntParamDefFunc( char* idString ) {
 	unsigned int idZmiennej;
-	sscanf( idString, "%*s intZm_%06x",&idZmiennej );
+	sscanf( idString,"%*[\" intZm\"]_%06x", &idZmiennej ); // magia! czemu to wycina inta z przodu i dziala jak inta nie ma z przodu tez
 	addParamDefFunc( idZmiennej, 0 );
 
 }
@@ -74,7 +74,7 @@ void addIntParamDefFunc( char* idString ) {
 
 void addStringParamDefFunc( char* idString ) {
 	unsigned int idZmiennej;
-	sscanf( idString, "%*s stringZm_%06x",&idZmiennej );
+	sscanf( idString,"%*[\" stringZm\"]_%06x", &idZmiennej ); // magia!
 	addParamDefFunc( idZmiennej, 1 );
 }
 
@@ -124,30 +124,44 @@ void startCallFunc( long int idFunkcji ) {
 }
 
 
-void addParamCallFunc( long int idZmiennej, int typ ) {
+void addParamCallFunc( long int idZmiennej, int typ ) { // jesli idZmiennej jest -1 to nie wyswietlac nic
 		int i = 0;
 		while( temp.parametryTyp[ i ] != -1 ) i++; // znajdz koniec
 	temp.parametryId[ i ] = idZmiennej;
 	temp.parametryTyp[ i ] = typ;
 	temp.parametryTyp[ i+1 ] = -1;
 
-	// wyswietlenie kodu C
-	p_p();
+		// wyswietlenie kodu C jesli nie idZmiennej != -1
+		if( idZmiennej != -1 )
+			if( typ ) printf("stringZm_%06x,", idZmiennej );
+			else	  printf("intZm_%06x,", idZmiennej );
 }
 
 
-void addIntParamCallFunc( char* idString ) {
+void addIntVarParamCallFunc( char* idString ) {
 	unsigned int idZmiennej;
-	sscanf( idString, "%*s intZm_%06x", &idZmiennej );
+	sscanf( idString,"%*[\" intZm\"]_%06x", &idZmiennej ); // magia!
 	addParamCallFunc( idZmiennej, 0 );
 
 }
 
 
-void addStringParamCallFunc( char* idString ) {
+void addStringVarParamCallFunc( char* idString ) {
 	unsigned int idZmiennej;
-	sscanf( idString, "%*s stringZm_%06x", &idZmiennej );
+	sscanf( idString,"%*[\" stringZm\"]_%06x", &idZmiennej ); // magia!
 	addParamCallFunc( idZmiennej, 1 );
+}
+
+
+void addIntParamCallFunc( char* wartoscInta ) {
+	printf( "%s,", wartoscInta );
+	addParamCallFunc( -1, 0 ); // -1 czyli nie wyswietlac
+}
+
+
+void addStringParamCallFunc( char* wartoscStringa ) {
+	printf( "\"%s\",", wartoscStringa );
+	addParamCallFunc( -1, 1 ); // -1 czyli nie wyswietlac
 }
 
 

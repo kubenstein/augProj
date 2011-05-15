@@ -46,6 +46,7 @@ exp:	  pustaInstrukcja
 	| intVar assign int					{ intVar_assign_int($1,$2,$3); }
 	| intVar assign intVarDecl				{ intVar_assign_intVar($1,$2,$3); }
 	| funcDef
+	| funcExec
 	| end							{ p_s(); }
 	;
 
@@ -128,6 +129,17 @@ end:		L_COLOR_START end_ L_COLOR_END
 		;
 end_:				L_END				{ p("}"); globalnyStos(); }
 
+
+/* wywolanie funkcji */
+funcExec:	L_COLOR_START funcExec_ L_COLOR_END funcParam L_DEF_END	{ endCallFunc(); }
+funcExec_:			L_FUNC_CALL			{ startCallFunc( yylval.color ); }
+funcParam:
+		| stringVar 	{ addStringVarParamCallFunc( $1 ); }	funcParam
+		| intVar 	{ addIntVarParamCallFunc( $1 ); }	funcParam
+		| string 	{ addStringParamCallFunc( $1 ); }	funcParam
+		| int	 	{ addIntParamCallFunc( $1 ); }		funcParam
+		| pustaInstrukcja					funcParam
+		;
 %%
 
 int yyerror( char* komunikat ) {
