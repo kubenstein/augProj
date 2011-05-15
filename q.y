@@ -25,6 +25,7 @@
 %start input
 
 %type <color> intVar
+%type <color> stringVar
 %%
 
 input:
@@ -46,7 +47,7 @@ exp:	  pustaInstrukcja
 pustaInstrukcja: L_COLOR_START L_COLOR_END
 
  /* zmienne i wartosci */
-stringVar:	L_COLOR_START stringVar_ L_COLOR_END
+stringVar:	L_COLOR_START stringVar_ L_COLOR_END		{ $$ = $1; }
 stringVar_:			L_STRING_VAR			{ initString( yylval.color ); }
 
 
@@ -92,7 +93,7 @@ moreThen_:			'>'				{ p(" > "); }
 funcDef:	L_COLOR_START funcDef_ L_COLOR_END funcDefArgs L_DEF_END	{ globalnyStos(); endDefFunc(); }
 funcDef_:			L_FUNC_START			{ nowyStos(); startDefFunc( yylval.color); }
 funcDefArgs:
-		| stringVar 	{ p_p(); }			funcDefArgs
+		| stringVar 	{ addParamDefFunc( $1, 1); }	funcDefArgs
 		| intVar 	{ addParamDefFunc( $1, 0); }	funcDefArgs
 		| pustaInstrukcja				funcDefArgs
 		;
@@ -123,7 +124,7 @@ end_:				L_END				{ p("}"); globalnyStos(); }
 funcExec:	L_COLOR_START funcExec_ L_COLOR_END funcParam L_DEF_END	{ endCallFunc(); }
 funcExec_:			L_FUNC_CALL			{ startCallFunc( yylval.color ); }
 funcParam:
-		| stringVar 	{ p_p(); }			funcParam
+		| stringVar 	{ addParamCallFunc( $1, 1); }	funcParam
 		| intVar 	{ addParamCallFunc( $1, 0); }	funcParam
 		| string 	{ addParamCallFunc( 0, 1); }	funcParam
 		| int	 	{ addParamCallFunc( 0, 0); }	funcParam
