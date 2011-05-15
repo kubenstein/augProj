@@ -13,7 +13,9 @@ void stringVar_assign_string( char* s1, char* s2, char* s3 ) {
 	char ids1[10];
 	sscanf(s1, "%*s stringZm_%s",ids1);
 
-	printf("%s = malloc( sizeof(char) * strlen(\"%s\"));",s1,s3);
+	printf("%s;",s1);
+	printf("if( stringZm_%s ) free(stringZm_%s);",ids1,ids1);
+	printf("stringZm_%s = malloc( sizeof(char) * strlen(\"%s\"));",ids1,s3);
 	printf("strcpy( stringZm_%s,\"%s\");",ids1,s3);
 	free(s1);
 	free(s2);
