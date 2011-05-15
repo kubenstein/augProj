@@ -116,7 +116,7 @@ logicOpr: 	  compare
 end:		L_COLOR_START end_ L_COLOR_END
 		| end_
 		;
-end_:				L_END				{ printf("}"); globalnyStos(); }
+end_:				L_END				{ p("}"); globalnyStos(); }
 
  /* wywolanie funkcji */
 funcExec:	L_COLOR_START funcExec_ L_COLOR_END funcParam L_DEF_END	{ endCallFunc(); }
