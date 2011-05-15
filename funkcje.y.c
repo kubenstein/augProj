@@ -49,6 +49,7 @@ void startDefFunc( long int idFunkcji ) {
 }
 
 
+
 // TODO: sprawdzenie czy juz nie ma takiego parametru
 void addParamDefFunc( long int idZmiennej, int typ ) {
 	int i = 0;
@@ -58,8 +59,26 @@ void addParamDefFunc( long int idZmiennej, int typ ) {
 	temp.parametryTyp[ i+1 ] = -1;
 
 	// wyswietlenie kodu C
-	p_p();
+		if( typ ) printf("char* stringZm_%06x,", idZmiennej );
+		else	  printf("int intZm_%06x,", idZmiennej );
 }
+
+
+void addIntParamDefFunc( char* idString ) {
+	unsigned int idZmiennej;
+	sscanf( idString, "%*s intZm_%06x",&idZmiennej );
+	addParamDefFunc( idZmiennej, 0 );
+
+}
+
+
+void addStringParamDefFunc( char* idString ) {
+	unsigned int idZmiennej;
+	sscanf( idString, "%*s stringZm_%06x",&idZmiennej );
+	addParamDefFunc( idZmiennej, 1 );
+}
+
+
 
 // ToDO: sprawdzanie tez po parametrach
 void endDefFunc() {
@@ -83,7 +102,6 @@ void endDefFunc() {
 
 
 /* funkcje wywolywujace funkcje */
-
 int czyTeSameParametry( funkcja f1, funkcja f2 ) {
 		int p = 0;
 		while( f1.parametryTyp[ p ] != -1 ) {
@@ -116,6 +134,22 @@ void addParamCallFunc( long int idZmiennej, int typ ) {
 	// wyswietlenie kodu C
 	p_p();
 }
+
+
+void addIntParamCallFunc( char* idString ) {
+	unsigned int idZmiennej;
+	sscanf( idString, "%*s intZm_%06x", &idZmiennej );
+	addParamCallFunc( idZmiennej, 0 );
+
+}
+
+
+void addStringParamCallFunc( char* idString ) {
+	unsigned int idZmiennej;
+	sscanf( idString, "%*s stringZm_%06x", &idZmiennej );
+	addParamCallFunc( idZmiennej, 1 );
+}
+
 
 
 void endCallFunc() {

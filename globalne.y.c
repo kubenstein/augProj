@@ -16,6 +16,7 @@ int NEWHEAP_FOR_VARS_FLAG = 0;		// czy odkladac zadeklarowane zmienne na nowym s
 void p( const char* k ) { printf(k); }
 void p_s() { p(";\n");	}
 void p_p() { p(",");	}
+
 char* rs( const char* in ) {
 	char* out = malloc( sizeof(char) * strlen( in ) ); // bison zrobi free
 	strcpy( out, in );

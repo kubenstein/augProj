@@ -45,6 +45,8 @@ exp:	  pustaInstrukcja
 	| stringVar assign stringVarDecl			{ stringVar_assign_stringVar($1,$2,$3); }
 	| intVar assign int					{ intVar_assign_int($1,$2,$3); }
 	| intVar assign intVarDecl				{ intVar_assign_intVar($1,$2,$3); }
+	| funcDef
+	| end							{ p_s(); }
 	;
 
 
@@ -109,6 +111,22 @@ moreThen:	L_COLOR_START moreThen_ L_COLOR_END		{ $$ = $2; }
 		| moreThen_					{ $$ = rs(" > "); }
 		;
 moreThen_:			'>'
+
+
+ /* deklaracja funkcji */
+funcDef:	L_COLOR_START funcDef_ L_COLOR_END funcDefArgs L_DEF_END	{ globalnyStos(); endDefFunc(); }
+funcDef_:			L_FUNC_START			{ nowyStos(); startDefFunc( yylval.color); }
+funcDefArgs:
+		| stringVar 	{ addStringParamDefFunc( $1 );}	funcDefArgs
+		| intVar 	{ addIntParamDefFunc( $1 ); }	funcDefArgs
+		| pustaInstrukcja				funcDefArgs
+		;
+
+ /* block end */
+end:		L_COLOR_START end_ L_COLOR_END
+		| end_
+		;
+end_:				L_END				{ p("}"); globalnyStos(); }
 
 %%
 
