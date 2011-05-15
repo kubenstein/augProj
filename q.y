@@ -37,6 +37,7 @@ input:
 exp:	  pustaInstrukcja
 	| stringVar assign string 				{ p_s(); }
 	| intVar assign int					{ p_s(); }
+	| intVar assign intVar					{ p_s(); }
 	| funcDef
 	| whileDef
 	| funcExec						{ p_s(); }
