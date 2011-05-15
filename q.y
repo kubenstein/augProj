@@ -114,6 +114,8 @@ logicOpr: 	  compare
 
  /* block end */
 end:		L_COLOR_START end_ L_COLOR_END
+		| end_
+		;
 end_:				L_END				{ printf("}"); globalnyStos(); }
 
  /* wywolanie funkcji */
