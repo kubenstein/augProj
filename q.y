@@ -125,7 +125,7 @@ funcParam:
 		| stringVar 	{ p_p(); }			funcParam
 		| intVar 	{ addParamCallFunc( $1, 0); }	funcParam
 		| string 	{ addParamCallFunc( 0, 1); }	funcParam
-		| int	 	{ p_p(); }			funcParam
+		| int	 	{ addParamCallFunc( 0, 0); }	funcParam
 		| pustaInstrukcja				funcParam
 		;
 %%
