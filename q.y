@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include "globalne.y.c"
 #include "zmienneIntowe.y.c"
+#include "zmienneStringowe.y.c"
 #include "funkcje.y.c"
 #include "while.y.c"
 %}
@@ -46,7 +47,7 @@ pustaInstrukcja: L_COLOR_START L_COLOR_END
 
  /* zmienne i wartosci */
 stringVar:	L_COLOR_START stringVar_ L_COLOR_END
-stringVar_:			L_STRING_VAR			{ printf("string strZm_%06x", yylval.color); }
+stringVar_:			L_STRING_VAR			{ initString( yylval.color ); }
 
 
 intVar:	  	L_COLOR_START intVar_ L_COLOR_END		{ $$ = $1; }
