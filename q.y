@@ -36,7 +36,7 @@
 %%
 
 input:
-	| input exp {p(" ");} input
+	| input exp input
 	| input '\n'
 	;
 
