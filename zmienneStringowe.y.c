@@ -2,7 +2,7 @@
 
 /* funkcja bledow */
 void noStringVarError( long int idZmiennej ) {
-	fprintf( stdout, "ERR_COMPILE: int variable never initialized: #%06x\n", idZmiennej );
+	fprintf( stdout, "ERR_COMPILE: string variable never initialized: #%06x\n", idZmiennej );
 	exit(1);
 }
 
