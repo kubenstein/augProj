@@ -14,3 +14,11 @@ void endWhile() {
 	// wyswietlenie kodu C
 	printf(" ) {\n");
 }
+
+
+void bulidConditionWhile( char* exp1, char* exp2, char* exp3 ) {
+	printf( "%s %s %s", exp1, exp2, exp3 );
+	free( exp1 );
+	free( exp2 );
+	free( exp3 );
+}

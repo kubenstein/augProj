@@ -32,6 +32,8 @@
 %type <string> compare compare_
 %type <string> lessThen lessThen_
 %type <string> moreThen moreThen_
+%type <string> logicOpr
+%type <string> conExp
 %%
 
 input:
@@ -46,6 +48,7 @@ exp:	  pustaInstrukcja
 	| intVar assign int					{ intVar_assign_int($1,$2,$3); }
 	| intVar assign intVarDecl				{ intVar_assign_intVar($1,$2,$3); }
 	| funcDef
+	| whileDef
 	| funcExec
 	| end							{ p_s(); }
 	;
@@ -128,6 +131,21 @@ end:		L_COLOR_START end_ L_COLOR_END
 		| end_
 		;
 end_:				L_END				{ p("}"); globalnyStos(); }
+
+
+ /* deklaracja petli */
+whileDef:	L_COLOR_START whileDef_ L_COLOR_END whileCon L_DEF_END	{ endWhile(); }
+		| whileDef_ whileCon L_DEF_END			{ endWhile(); }
+		;
+whileDef_:			L_WHILE_START			{ startWhile(); }
+whileCon:	  conExp logicOpr conExp			{ bulidConditionWhile($1,$2,$3); }
+conExp:		  intVar					{ $$ = $1; }
+		| int						{ $$ = $1; }
+		;
+logicOpr: 	  compare					{ $$ = $1; }
+		| lessThen					{ $$ = $1; }
+		| moreThen					{ $$ = $1; }
+		;
 
 
 /* wywolanie funkcji */
