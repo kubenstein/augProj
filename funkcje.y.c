@@ -66,7 +66,7 @@ void addParamDefFunc( long int idZmiennej, int typ ) {
 
 void addIntParamDefFunc( char* idString ) {
 	unsigned int idZmiennej;
-	sscanf( idString,"%*[\" intZm\"]_%06x", &idZmiennej ); // magia! czemu to wycina inta z przodu i dziala jak inta nie ma z przodu tez
+	sscanf( idString,"%*['int intZm']_%06x", &idZmiennej );
 	addParamDefFunc( idZmiennej, 0 );
 	free( idString );
 }
@@ -74,7 +74,7 @@ void addIntParamDefFunc( char* idString ) {
 
 void addStringParamDefFunc( char* idString ) {
 	unsigned int idZmiennej;
-	sscanf( idString,"%*[\" stringZm\"]_%06x", &idZmiennej ); // magia!
+	sscanf( idString,"%*['char* stringZm']_%06x", &idZmiennej );
 	addParamDefFunc( idZmiennej, 1 );
 	free( idString );
 }
