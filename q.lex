@@ -33,8 +33,11 @@ NAPIS {STRING1}|{STRING2}
  /* wartosci */ 
 {NAPIS}			{
 			  int len = strlen( yytext );
-			  char* napis = malloc( sizeof(char) * strlen( yytext ) ); // malloc! free w bisonie!
+			  char* napis = malloc( sizeof(char) * len ); // malloc! free w bisonie!
 			  strcpy( napis,yytext );
+			  napis[0] = '"';
+			  napis[ len -1 ] = '"';
+			  napis[ len ] = '\0';
 			  yylval.string = napis;
 			  return L_STRING;
 			}
