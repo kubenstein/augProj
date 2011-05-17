@@ -10,7 +10,7 @@ void noIntVarError( long int idZmiennej ) {
 
 /* funkcje wyswietlajace wyrazenia */
 void intVar_assign_int( char* s1, char* s2, char* s3 ) {
-	printf("%s %s %s;",s1,s2,s3);
+	printf("%s %s %s;\n",s1,s2,s3);
 	free(s1);
 	free(s2);
 	free(s3);

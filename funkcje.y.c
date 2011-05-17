@@ -186,6 +186,6 @@ void endCallFunc() {
 	NOINITIALIZE_NEW_VARS_FLAG = 0;
 
 	// wyswietlenie kodu C
-	printf("NULL)");
+	printf("NULL);\n");
 }
 
