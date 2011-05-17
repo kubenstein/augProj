@@ -179,5 +179,7 @@ int yyerror( char* komunikat ) {
 
 
 int main() {
+	header();
 	yyparse();
+	footer();
 }

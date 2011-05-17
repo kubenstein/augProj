@@ -60,4 +60,13 @@ void globalnyStos() {
 	NEWHEAP_FOR_VARS_FLAG = 0;
 }
 
+
+/* wyswietlanie poczatku pliku i konca */
+void header() {
+	printf("#include <stdio.h>\n#include <stdlib.h>\n#include <string.h>\nint main() {\n");
+}
+
+void footer() {
+	printf("return 0;\n}\n");
+}
 #endif
