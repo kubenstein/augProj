@@ -33,7 +33,6 @@
 %type <string> lessThen lessThen_
 %type <string> moreThen moreThen_
 %type <string> logicOpr
-%type <string> conExp
 %%
 
 input:
@@ -138,10 +137,23 @@ whileDef:	L_COLOR_START whileDef_ L_COLOR_END whileCon L_DEF_END	{ endWhile(); }
 		| whileDef_ whileCon L_DEF_END			{ endWhile(); }
 		;
 whileDef_:			L_WHILE_START			{ startWhile(); }
-whileCon:	  conExp logicOpr conExp			{ bulidConditionWhile($1,$2,$3); }
-conExp:		  intVar					{ $$ = $1; }
-		| int						{ $$ = $1; }
+whileCon:	  intCon
+		| stringCon
 		;
+
+
+intCon:		  intVar logicOpr intVar			{ int_comparator_int($1,$2,$3); }
+		| intVar logicOpr int				{ int_comparator_int($1,$2,$3); }
+		| int logicOpr intVar				{ int_comparator_int($1,$2,$3); }
+		| int logicOpr int				{ int_comparator_int($1,$2,$3); }
+		;
+
+
+stringCon:	  stringVar compare stringVar			{ string_compare_string($1,$2,$3); }
+		| stringVar compare string			{ string_compare_string($1,$2,$3); }
+		| string compare stringVar			{ string_compare_string($1,$2,$3); }
+		;
+
 logicOpr: 	  compare					{ $$ = $1; }
 		| lessThen					{ $$ = $1; }
 		| moreThen					{ $$ = $1; }

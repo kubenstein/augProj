@@ -163,7 +163,7 @@ void addIntParamCallFunc( char* wartoscInta ) {
 
 
 void addStringParamCallFunc( char* wartoscStringa ) {
-	printf( "\"%s\",", wartoscStringa );
+	printf( "%s,", wartoscStringa );
 	addParamCallFunc( -1, 1 ); // -1 czyli nie wyswietlac
 	free( wartoscStringa );
 }

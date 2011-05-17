@@ -24,6 +24,15 @@ void intVar_assign_intVar( char* s1, char* s2, char* s3 ) {
 
 
 
+void int_comparator_int( char* int1, char* logicOpr, char* int2 ) { //zarowno intVar jak i int
+	printf( "%s %s %s", int1, logicOpr, int2 );
+	free( int1 );
+	free( logicOpr );
+	free( int2 );
+}
+
+
+
 /* funkcja inicjujaca zminna */
 char* initInt( long int idZmiennej ) {
 	int* tablica = zmienneInt;
