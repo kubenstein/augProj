@@ -63,7 +63,22 @@ void globalnyStos() {
 
 /* wyswietlanie poczatku pliku i konca */
 void header() {
-	printf("#include <stdio.h>\n#include <stdlib.h>\n#include <string.h>\nint main() {\n");
+printf("\
+#include <stdio.h>	\n\
+#include <stdlib.h>	\n\
+#include <string.h>	\n\n\
+\
+\
+\
+void function_ffff00( char* str, void* v ) {	\n\
+	printf(\"%cs\",str);	\n\
+}	\n\
+	\n\
+void function_ffff00( long int liczba, void* v ) {	\n\
+	printf(\"%c06x\",liczba);	\n\
+}	\n\
+	\n\
+int main() {\n",'%','%');
 }
 
 void footer() {

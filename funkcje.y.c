@@ -1,5 +1,9 @@
 #include "globalne.y.c"
 
+/* zmienna determinujaca czy wykonywana funkcja to funkcja zolta */
+int YELLOW_FUNC_FLAG = 0;
+
+
 /* struktura funkcji */
 typedef struct {
 	long int idFunkcji;
@@ -118,6 +122,8 @@ void startCallFunc( long int idFunkcji ) {
 	resetTemp();
 	temp.idFunkcji = idFunkcji;
 
+		if( idFunkcji == 0xffff00 ) YELLOW_FUNC_FLAG = 1;
+
 	NOINITIALIZE_NEW_VARS_FLAG = 1;
 
 	// wyswietlenie kodu C
@@ -136,6 +142,12 @@ void addParamCallFunc( long int idZmiennej, int typ ) { // jesli idZmiennej jest
 		if( idZmiennej != -1 )
 			if( typ ) printf("stringZm_%06x,", idZmiennej );
 			else	  printf("intZm_%06x,", idZmiennej );
+
+
+		if( YELLOW_FUNC_FLAG ) {
+
+		printf("NULL);\n function_ffff00(");
+		}
 }
 
 
@@ -179,6 +191,13 @@ void endCallFunc() {
 				ok = 1;
 				break;
 				}
+
+
+		if( YELLOW_FUNC_FLAG ) {
+		ok = 1;
+		YELLOW_FUNC_FLAG = 0;
+		printf("\"\",");
+		}
 
 
 		if( !ok ) noFuncError( temp.idFunkcji ); // funkcja nie zostala znaleziona
