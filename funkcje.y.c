@@ -141,7 +141,7 @@ void addParamCallFunc( long int idZmiennej, int typ ) { // jesli idZmiennej jest
 
 void addIntVarParamCallFunc( char* idString ) {
 	unsigned int idZmiennej;
-	sscanf( idString,"%*[\" intZm\"]_%06x", &idZmiennej ); // magia!
+	sscanf( idString,"%*['int stringZm']_%06x", &idZmiennej );
 	addParamCallFunc( idZmiennej, 0 );
 	free( idString );
 }
@@ -149,7 +149,7 @@ void addIntVarParamCallFunc( char* idString ) {
 
 void addStringVarParamCallFunc( char* idString ) {
 	unsigned int idZmiennej;
-	sscanf( idString,"%*[\" stringZm\"]_%06x", &idZmiennej ); // magia!
+	sscanf( idString,"%*['char* stringZm']_%06x", &idZmiennej );
 	addParamCallFunc( idZmiennej, 1 );
 	free( idString );
 }

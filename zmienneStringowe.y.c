@@ -10,13 +10,17 @@ void noStringVarError( long int idZmiennej ) {
 
 /* funkcje wyswietlajace wyrazenia */
 void stringVar_assign_string( char* s1, char* s2, char* s3 ) {
-	char ids1[10];
-	sscanf(s1, "%*s stringZm_%s",ids1);
+	unsigned int ids1;
+	sscanf( s1,"%*['char* stringZm']_%06x", &ids1 );
 
-	printf("%s;\n",s1);
-	printf("if( stringZm_%s ) free(stringZm_%s);\n",ids1,ids1);
-	printf("stringZm_%s = malloc( sizeof(char) * strlen(%s));\n",ids1,s3);
-	printf("strcpy( stringZm_%s,%s);\n",ids1,s3);
+		if( s1[0] == 'c' ) { // jesli to wlasnie stworzona zmienna to nie bedzie free
+		printf("%s = NULL;\n",s1);
+		} else {
+		printf("if( stringZm_%06x ) free( stringZm_%06x );\n",ids1,ids1);
+		}
+
+	printf("stringZm_%06x = malloc( sizeof(char) * strlen(%s));\n",ids1,s3);
+	printf("strcpy( stringZm_%06x,%s );\n",ids1,s3);
 	free(s1);
 	free(s2);
 	free(s3);
