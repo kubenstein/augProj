@@ -130,53 +130,45 @@ void startCallFunc( long int idFunkcji ) {
 }
 
 
-void addParamCallFunc( long int idZmiennej, int typ ) { // jesli idZmiennej jest -1 to nie wyswietlac nic
+void addParamCallFunc( char* stringParametru, int typ ) {
 		int i = 0;
 		while( temp.parametryTyp[ i ] != -1 ) i++; // znajdz koniec
-	temp.parametryId[ i ] = idZmiennej;
+//	temp.parametryId[ i ] = idZmiennej; // nie potrzebne chyba
 	temp.parametryTyp[ i ] = typ;
 	temp.parametryTyp[ i+1 ] = -1;
 
 
 		// wyswietlanie kodu c dla uprzywilejowanej zoltej funkcji
 		if( YELLOW_FUNC_FLAG ) {
-			if( typ ) printf("function_ffff00_s( stringZm_%06x );\n", idZmiennej );
-			else	  printf("function_ffff00_i( intZm_%06x );\n", idZmiennej );
+			if( typ ) printf("function_ffff00_s( %s );\n", stringParametru );
+			else	  printf("function_ffff00_i( %s );\n", stringParametru );
 		} else
 
-		// wyswietlenie kodu C jesli nie idZmiennej != -1
-		if( idZmiennej != -1 )
-			if( typ ) printf("stringZm_%06x,", idZmiennej );
-			else	  printf("intZm_%06x,", idZmiennej );
+		// wyswietlenie kodu C
+		printf("%s,", stringParametru );
 }
 
 
 void addIntVarParamCallFunc( char* idString ) {
-	unsigned int idZmiennej;
-	sscanf( idString,"%*['int stringZm']_%06x", &idZmiennej );
-	addParamCallFunc( idZmiennej, 0 );
+	addParamCallFunc( idString, 0 );
 	free( idString );
 }
 
 
 void addStringVarParamCallFunc( char* idString ) {
-	unsigned int idZmiennej;
-	sscanf( idString,"%*['char* stringZm']_%06x", &idZmiennej );
-	addParamCallFunc( idZmiennej, 1 );
+	addParamCallFunc( idString, 1 );
 	free( idString );
 }
 
 
 void addIntParamCallFunc( char* wartoscInta ) {
-	printf( "%s,", wartoscInta );
-	addParamCallFunc( -1, 0 ); // -1 czyli nie wyswietlac
+	addParamCallFunc( wartoscInta, 0 );
 	free( wartoscInta );
 }
 
 
 void addStringParamCallFunc( char* wartoscStringa ) {
-	printf( "%s,", wartoscStringa );
-	addParamCallFunc( -1, 1 ); // -1 czyli nie wyswietlac
+	addParamCallFunc( wartoscStringa, 1 );
 	free( wartoscStringa );
 }
 
