@@ -14,13 +14,13 @@ typedef struct {
 
 /* funkcje bledu */
 void noFuncError( long int idFunkcji ) {
-	fprintf( stdout, "ERR_COMPILE: no function to call: #%06x\n", idFunkcji );
+	fprintf( stderr, "ERR_COMPILE: no function to call: #%06x\n", idFunkcji );
 	exit(1);
 }
 
 
 void alreadyExistsFuncError( long int idFunkcji ) {
-	fprintf( stdout, "ERR_COMPILE: function already exists: #%06x\n", idFunkcji );
+	fprintf( stderr, "ERR_COMPILE: function already exists: #%06x\n", idFunkcji );
 	exit(1);
 }
 

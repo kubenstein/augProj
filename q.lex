@@ -4,7 +4,7 @@
 #include "q.tab.h"
 
 void flexError() {
-	fprintf(stdout, "FLEX_ERR: unknown token at line: %d\n", yylineno );
+	fprintf(stderr, "FLEX_ERR: unknown token at line: %d\n", yylineno );
 	exit(1);
 }
 %}

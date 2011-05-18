@@ -173,7 +173,7 @@ funcParam:
 %%
 
 int yyerror( char* komunikat ) {
-	fprintf(stdout, "ERR_BISON: %s at line: %d\n", komunikat, yylloc.first_line );
+	fprintf(stderr, "ERR_BISON: %s at line: %d\n", komunikat, yylloc.first_line );
 	exit(1);
 }
 
