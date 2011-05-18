@@ -7,7 +7,6 @@ int YELLOW_FUNC_FLAG = 0;
 /* struktura funkcji */
 typedef struct {
 	long int idFunkcji;
-	long int parametryId[1000];
 	int parametryTyp[1000]; // 0 int; 1 string; -1 koniec listy
 } funkcja;
 
@@ -58,7 +57,6 @@ void startDefFunc( long int idFunkcji ) {
 void addParamDefFunc( long int idZmiennej, int typ ) {
 	int i = 0;
 		while( temp.parametryTyp[ i ] != -1 ) i++; // znajdz koniec
-	temp.parametryId[ i ] = idZmiennej;
 	temp.parametryTyp[ i ] = typ;
 	temp.parametryTyp[ i+1 ] = -1;
 
@@ -133,7 +131,6 @@ void startCallFunc( long int idFunkcji ) {
 void addParamCallFunc( char* stringParametru, int typ ) {
 		int i = 0;
 		while( temp.parametryTyp[ i ] != -1 ) i++; // znajdz koniec
-//	temp.parametryId[ i ] = idZmiennej; // nie potrzebne chyba
 	temp.parametryTyp[ i ] = typ;
 	temp.parametryTyp[ i+1 ] = -1;
 
