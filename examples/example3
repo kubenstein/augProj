@@ -1,0 +1,18 @@
+// program pokazuje proces kopiowanie wartosci zmiennych stringowych
+[c:#ff0000]def[/c][c:#00bb00]%[/c]
+[c:#ffff00]@[/c][c:#00bb00]%[/c] "!"
+[c:#ff0000]end[/c]
+
+[c:#ff0000]@[/c][c:#00ff00]"jest spoko"[/c]
+
+
+[c:#00ff00]%[/c] = "zmienna stringowa w cudzyslowiu"
+
+[c:#00ffff]%[/c] = [c:#00ff00]%[/c]
+
+[c:#ffff00]@[/c][c:#00ffff]%[/c]
+
+
+
+
+

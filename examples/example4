@@ -1,0 +1,14 @@
+// program wyswietla pokolei cyfry od 1 do f
+[c:#0000ff]#[/c] = [c:#000000]&[/c] // liczba 0
+[c:#00dead]#[/c] = [c:#00000f]&[/c] // liczba f
+
+
+[c:#ff0000]while[/c][c:#0000ff]#[/c] < [c:#00dead]#[/c]
+
+[c:#ff00ff]#[/c] = [c:#000001]&[/c] // liczba 1
+
+[c:#0000ff]#[/c] = [c:#0000ff]#[/c] + [c:#ff00ff]#[/c]
+[c:#ffff00]@[/c][c:#0000ff]#[/c] "!\n"
+
+[c:#ff0000]end[/c]
+

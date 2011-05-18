@@ -1,5 +1,5 @@
 #!/bin/bash
-rm -f a.out
+rm -f compilator
 
 echo " * bison -d q.y"
 bison -d q.y
@@ -8,7 +8,7 @@ echo " * flex -o q.lex.c q.lex"
 flex -o q.lex.c q.lex
 
 echo " * gcc -o q q.lex.c q.tab.c -lfl -lm"
-gcc -o a.out q.lex.c q.tab.c -lfl -lm 
+gcc -o compilator q.lex.c q.tab.c -lfl -lm 
 
 	if [ "$1" != "" ]
 	then

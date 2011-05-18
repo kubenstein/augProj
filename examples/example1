@@ -1,0 +1,18 @@
+// program przekazuje zmienna stringowa do funkcji, ktora ta zmienna wyswieta dodajac !
+[c:#ff0000]def[/c][c:#0000ff]%[/c]
+[c:#ffff00]@[/c][c:#0000ff]%[/c]"!"
+[c:#ff0000]end[/c]
+
+[c:#ff0000]@[/c][c:#00ff00]"jest spoko"[/c]
+
+
+[c:#00ff00]%[/c] = "zmienna stringowa w cudzyslowiu"
+
+[c:#00ff00]%[/c] = 'zamiana wartosc a string jest w apostrofach'
+
+[c:#ffff00]@[/c][c:#00ff00]%[/c]
+
+
+
+
+

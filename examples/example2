@@ -1,0 +1,11 @@
+// funkcja dodaje dwie liczby podane w argumentach i wyswietla wynik
+[c:#ff0000]def[/c][c:#0000ff]#[/c][c:#00aa00]#[/c]
+
+[c:#00ff00]#[/c] = [c:#0000ff]#[/c] + [c:#00aa00]#[/c]
+[c:#ffff00]@[/c][c:#00ff00]#[/c]
+
+[c:#ff0000]end[/c]
+
+[c:#ff0000]@[/c][c:#00ff00]&[/c][c:#00ff00]&[/c]
+
+
