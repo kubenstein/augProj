@@ -1,0 +1,9 @@
+#!/bin/bash
+rm -f out
+cat $1 | ./compilator > theCcode.c
+gcc theCcode.c -o out
+
+echo "-----"
+./out
+echo -e "\n-----"
+
