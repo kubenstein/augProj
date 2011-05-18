@@ -32,7 +32,12 @@
 %type <string> compare compare_
 %type <string> lessThen lessThen_
 %type <string> moreThen moreThen_
+%type <string> plus plus_
+%type <string> minus minus_
+%type <string> mul mul_
+%type <string> div div_
 %type <string> logicOpr
+%type <string> artmOpr
 %%
 
 input:
@@ -45,12 +50,20 @@ exp:	  pustaInstrukcja
 	| stringVar assign string 				{ stringVar_assign_string($1,$2,$3); }
 	| stringVar assign stringVarDecl			{ stringVar_assign_stringVar($1,$2,$3); }
 	| intVar assign int					{ intVar_assign_int($1,$2,$3); }
+	| intVar assign intVar artmOpr intVar			{ intVar_assign_intVar_artmOpr_intVar($1,$2,$3,$4,$5); }
 	| intVar assign intVarDecl				{ intVar_assign_intVar($1,$2,$3); }
 	| funcDef
 	| whileDef
 	| funcExec
 	| end							{ p_s(); }
 	;
+
+
+artmOpr: 	  plus					{ $$ = $1; }
+		| minus					{ $$ = $1; }
+		| mul					{ $$ = $1; }
+		| div					{ $$ = $1; }
+		;
 
 
 pustaInstrukcja: L_COLOR_START L_COLOR_END
@@ -115,6 +128,29 @@ moreThen:	L_COLOR_START moreThen_ L_COLOR_END		{ $$ = $2; }
 		;
 moreThen_:			'>'
 
+
+plus:		L_COLOR_START plus_ L_COLOR_END			{ $$ = $2; }
+		| plus_						{ $$ = rs(" + "); }
+		;
+plus_:				'+'
+
+
+minus:		L_COLOR_START minus_ L_COLOR_END		{ $$ = $2; }
+		| minus_					{ $$ = rs(" - "); }
+		;
+minus_:				'-'
+
+
+mul:		L_COLOR_START mul_ L_COLOR_END			{ $$ = $2; }
+		| mul_						{ $$ = rs(" * "); }
+		;
+mul_:				'*'
+
+
+div:		L_COLOR_START div_ L_COLOR_END			{ $$ = $2; }
+		| div_						{ $$ = rs(" / "); }
+		;
+div_:				'/'
 
  /* deklaracja funkcji */
 funcDef:	L_COLOR_START funcDef_ L_COLOR_END funcDefArgs L_DEF_END	{ endDefFunc(); }

@@ -32,6 +32,15 @@ void int_comparator_int( char* int1, char* logicOpr, char* int2 ) { //zarowno in
 }
 
 
+void intVar_assign_intVar_artmOpr_intVar( char* s1, char* s2, char* s3, char* s4, char* s5 ) {
+	printf("%s %s %s %s %s;\n",s1,s2,s3,s4,s5);
+	free(s1);
+	free(s2);
+	free(s3);
+	free(s4);
+	free(s5);
+}
+
 
 /* funkcja inicjujaca zminna */
 char* initInt( long int idZmiennej ) {
