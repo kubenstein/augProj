@@ -70,11 +70,11 @@ printf("\
 \
 \
 \
-void function_ffff00( char* str, void* v ) {	\n\
+void function_ffff00_s( char* str ) {	\n\
 	printf(\"%cs\",str);	\n\
 }	\n\
 	\n\
-void function_ffff00( long int liczba, void* v ) {	\n\
+void function_ffff00_i( int liczba ) {	\n\
 	printf(\"%c06x\",liczba);	\n\
 }	\n\
 	\n\

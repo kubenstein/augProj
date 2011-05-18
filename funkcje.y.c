@@ -121,13 +121,12 @@ int czyTeSameParametry( funkcja f1, funkcja f2 ) {
 void startCallFunc( long int idFunkcji ) {
 	resetTemp();
 	temp.idFunkcji = idFunkcji;
-
-		if( idFunkcji == 0xffff00 ) YELLOW_FUNC_FLAG = 1;
-
 	NOINITIALIZE_NEW_VARS_FLAG = 1;
 
-	// wyswietlenie kodu C
-	printf("function_%06x(", idFunkcji );
+		if( idFunkcji == 0xffff00 ) YELLOW_FUNC_FLAG = 1;
+		else
+		// wyswietlenie kodu C
+		printf("function_%06x(", idFunkcji );
 }
 
 
@@ -138,16 +137,17 @@ void addParamCallFunc( long int idZmiennej, int typ ) { // jesli idZmiennej jest
 	temp.parametryTyp[ i ] = typ;
 	temp.parametryTyp[ i+1 ] = -1;
 
+
+		// wyswietlanie kodu c dla uprzywilejowanej zoltej funkcji
+		if( YELLOW_FUNC_FLAG ) {
+			if( typ ) printf("function_ffff00_s( stringZm_%06x );\n", idZmiennej );
+			else	  printf("function_ffff00_i( intZm_%06x );\n", idZmiennej );
+		} else
+
 		// wyswietlenie kodu C jesli nie idZmiennej != -1
 		if( idZmiennej != -1 )
 			if( typ ) printf("stringZm_%06x,", idZmiennej );
 			else	  printf("intZm_%06x,", idZmiennej );
-
-
-		if( YELLOW_FUNC_FLAG ) {
-
-		printf("NULL);\n function_ffff00(");
-		}
 }
 
 
@@ -192,19 +192,16 @@ void endCallFunc() {
 				break;
 				}
 
+	NOINITIALIZE_NEW_VARS_FLAG = 0;
 
+		// akceptowanie uprzywilejowanej zoltej funkcji
 		if( YELLOW_FUNC_FLAG ) {
 		ok = 1;
 		YELLOW_FUNC_FLAG = 0;
-		printf("\"\",");
-		}
+		} else
+		// wyswietlenie kodu C
+		printf("NULL);\n");
 
-
-		if( !ok ) noFuncError( temp.idFunkcji ); // funkcja nie zostala znaleziona
-
-	NOINITIALIZE_NEW_VARS_FLAG = 0;
-
-	// wyswietlenie kodu C
-	printf("NULL);\n");
+	if( !ok ) noFuncError( temp.idFunkcji ); // funkcja nie zostala znaleziona
 }
 
