@@ -117,7 +117,7 @@ moreThen_:			'>'
 
 
  /* deklaracja funkcji */
-funcDef:	L_COLOR_START funcDef_ L_COLOR_END funcDefArgs L_DEF_END	{ globalnyStos(); endDefFunc(); }
+funcDef:	L_COLOR_START funcDef_ L_COLOR_END funcDefArgs L_DEF_END	{ endDefFunc(); }
 funcDef_:			L_FUNC_START			{ nowyStos(); startDefFunc( yylval.color); }
 funcDefArgs:
 		| stringVar 	{ addStringParamDefFunc( $1 );}	funcDefArgs
